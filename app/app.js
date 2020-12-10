@@ -13,7 +13,7 @@ var triangleVertexNormalBuffer = null;
 
 // The GLOBAL transformation parameters
 
-var globalAngleYY = 0.0;
+var globalAngleYY = 30;
 
 var globalTz = 0.0;
 
@@ -31,13 +31,14 @@ var primitiveType = null;
  
 // To allow choosing the projection type
 
-var projectionType = 0;
+var projectionType = 1;
 
 // NEW --- The viewer position
 
 // It has to be updated according to the projection type
 
 var pos_Viewer = [ 0.0, 0.0, 0.0, 1.0 ];
+
 
 
 //----------------------------------------------------------------------------
@@ -361,24 +362,27 @@ function animate() {
 	    }
 
 		// For every model --- Local rotations
-		
-		for(var i = 0; i < sceneModels.length; i++ )
-	    {
-			if( sceneModels[i].rotXXOn ) {
+		// "dançar"
+		// for(var i = 0; i < 5; i++ )
+	    // {
+		// 	if( sceneModels[i].rotXXOn ) {
 
-				sceneModels[i].rotAngleXX += sceneModels[i].rotXXDir * sceneModels[i].rotXXSpeed * (90 * elapsed) / 1000.0;
-			}
+		// 		sceneModels[i].rotAngleXX += sceneModels[i].rotXXDir * sceneModels[i].rotXXSpeed * (90 * elapsed) / 1000.0;
+		// 	}
 
-			if( sceneModels[i].rotYYOn ) {
+		// 	if( sceneModels[i].rotYYOn ) {
 
-				sceneModels[i].rotAngleYY += sceneModels[i].rotYYDir * sceneModels[i].rotYYSpeed * (90 * elapsed) / 1000.0;
-			}
+		// 		sceneModels[i].rotAngleYY += sceneModels[i].rotYYDir * sceneModels[i].rotYYSpeed * (90 * elapsed) / 1000.0;
+		// 	}
 
-			if( sceneModels[i].rotZZOn ) {
+		// 	if( sceneModels[i].rotZZOn ) {
 
-				sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
-			}
-		}
+		// 		sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
+		// 	}
+		// }
+
+		sceneModels[1].tx -= 0.01;
+		//sceneModels[0].tz -= 0.01;
 		
 		// Rotating the light sources
 	
@@ -424,94 +428,31 @@ function outputInfos(){
 
 function setEventListeners(){
 
-	// document.getElementById("obj-file").onchange = function(){
-		
-	// 	var file = this.files[0];
-		
-	// 	var reader = new FileReader();
-		
-	// 	reader.onload = function( progressEvent ){
-			
-	// 		// Entire file read as a string
-			
-	// 		// The file lines
-			
-	// 		var lines = this.result.split('\n');
-			
-	// 		// The new vertices
-			
-	// 		var newVertices = [];
-			
-	// 		// The new normal vectors
-			
-	// 		var newNormals = [];
-			
-	// 		// Check every line and store 
-    
-	// 		for(var line = 0; line < lines.length; line++){
-      
-	// 			// The tokens/values in each line
-    
-	// 		    // Separation between tokens is 1 or mode whitespaces
-    
-	// 		    var tokens = lines[line].split(/\s\s*/);
-			    
-	// 		    // Array of tokens; each token is a string
-			    
-	// 		    if( tokens[0] == "v" ) 
-	// 		    {
-	// 				// For every vertex we have 3 floating point values
-			
-	// 			    for( j = 1; j < 4; j++ ) {
-					
-	// 					newVertices.push( parseFloat( tokens[ j ] ) );
-	// 				}
-	// 			}
+	document.addEventListener("keypress", function(event){
 
-	// 		    if( tokens[0] == "vn" ) 
-	// 		    {
-	// 				// For every normal we have 3 floating point values
-			
-	// 			    for( j = 1; j < 4; j++ ) {
-					
-	// 					newNormals.push( parseFloat( tokens[ j ] ) );
-	// 				}
-	// 			}
-	// 		}	
-						
-	// 		// Assigning to the current model
-			
-	// 		vertices = newVertices.slice();
-			
-	// 		normals = newNormals.slice();
-			
-	// 		// Checking to see if the normals are defined on the file
-			
-	// 		if( normals.length == 0 )
-	// 		{
-	// 			computeVertexNormals( vertices, normals );
-	// 		}
-						
-	// 		// To render the model just read
-		
-	// 		initBuffers();
+		// Getting the pressed key
+	
+		var key = event.keyCode; // ASCII
+	
+		switch(key){
+			case 97 : // left
+				sceneModels[0].tx -= 0.25;
+			break;
+			case 100 : //right
+				sceneModels[0].tx += 0.25;
+			break;
+			case 119 : // front
+				sceneModels[0].tz -= 0.25;	
+			break;
+			case 115  : // back
+				sceneModels[0].tz += 0.25;	
+			break;
+		}
 
-	// 		// RESET the transformations - NEED AUXILIARY FUNCTION !!
-			
-	// 		tx = ty = tz = 0.0;
-						
-	// 		angleXX = angleYY = angleZZ = 0.0;
-			
-	// 		sx = sy = sz = 0.7;
-	// 	};
-		
-	// 	// Entire file read as a string
-			
-	// 	reader.readAsText( file );		
-	// }
+			drawScene();
+	});
 	
-    // Dropdown list
-	
+
 	var projection = document.getElementById("projection-selection");
 	
 	projection.addEventListener("click", function(){
@@ -528,7 +469,7 @@ function setEventListeners(){
 			case 1 : projectionType = 1;
 				break;
 		}  	
-	});      
+	}); 
 
 	// Dropdown list
 	
