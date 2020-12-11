@@ -248,18 +248,18 @@ sceneModels[2].kDiff = [0,0,1];
 // chao
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[3].tx = 0.0; sceneModels[3].ty = -1; sceneModels[3].tz = -13;
+sceneModels[3].tx = 0.0; sceneModels[3].ty = -0.3; sceneModels[3].tz = -13;
 
 sceneModels[3].sx = 3;
 sceneModels[3].sy = 0.001;
 sceneModels[3].sz = 13;
-sceneModels[3].kDiff = [0.9,0.9,0.9];
+sceneModels[3].kDiff = [0.1,0.1,0.1];
 
 
 // "relva"
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[4].tx = 0.0; sceneModels[4].ty = -1; sceneModels[4].tz = -5;
+sceneModels[4].tx = 0.0; sceneModels[4].ty = -0.3; sceneModels[4].tz = -5;
 
 sceneModels[4].sx = 3;
 sceneModels[4].sy = 0.002;
@@ -271,7 +271,7 @@ sceneModels[4].kDiff = [0,1,0];
 // "relva"
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[5].tx = 0.0; sceneModels[5].ty = -1; sceneModels[5].tz = -7;
+sceneModels[5].tx = 0.0; sceneModels[5].ty = -0.3; sceneModels[5].tz = -7;
 
 sceneModels[5].sx = 3;
 sceneModels[5].sy = 0.002;
