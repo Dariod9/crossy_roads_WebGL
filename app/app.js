@@ -436,6 +436,93 @@ function outputInfos(){
 
 function setEventListeners(){
 
+
+	document.getElementById("obj-file").onchange = function(){
+		
+		var file = this.files[0];
+		
+		var reader = new FileReader();
+		
+		reader.onload = function( progressEvent ){
+			
+			// Entire file read as a string
+			
+			// The file lines
+			
+			var lines = this.result.split('\n');
+			
+			// The new vertices
+			
+			var newVertices = [];
+			
+			// The new normal vectors
+			
+			var newNormals = [];
+			
+			// Check every line and store 
+    
+			for(var line = 0; line < lines.length; line++){
+      
+				// The tokens/values in each line
+    
+			    // Separation between tokens is 1 or mode whitespaces
+    
+			    var tokens = lines[line].split(/\s\s*/);
+			    
+			    // Array of tokens; each token is a string
+			    
+			    if( tokens[0] == "v" ) 
+			    {
+					// For every vertex we have 3 floating point values
+			
+				    for( j = 1; j < 4; j++ ) {
+					
+						newVertices.push( parseFloat( tokens[ j ] ) );
+					}
+				}
+
+			    if( tokens[0] == "vn" ) 
+			    {
+					// For every normal we have 3 floating point values
+			
+				    for( j = 1; j < 4; j++ ) {
+					
+						newNormals.push( parseFloat( tokens[ j ] ) );
+					}
+				}
+			}	
+						
+			// Assigning to the current model
+			
+			vertices = newVertices.slice();
+			
+			normals = newNormals.slice();
+			
+			// Checking to see if the normals are defined on the file
+			
+			if( normals.length == 0 )
+			{
+				computeVertexNormals( vertices, normals );
+			}
+						
+			// To render the model just read
+		
+			initBuffers();
+
+			// RESET the transformations - NEED AUXILIARY FUNCTION !!
+			
+			tx = ty = tz = 0.0;
+						
+			angleXX = angleYY = angleZZ = 0.0;
+			
+			sx = sy = sz = 0.7;
+		};
+		
+		// Entire file read as a string
+			
+		reader.readAsText( file );		
+	}
+
 	document.addEventListener("keypress", function(event){
 
 		// Getting the pressed key
