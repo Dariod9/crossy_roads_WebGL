@@ -24,9 +24,9 @@ function emptyModelFeatures() {
 	
 	// Rotation angles	
 	
-	this.rotAngleXX = 30;
+	this.rotAngleXX = 0;
 	
-	this.rotAngleYY = -30;
+	this.rotAngleYY = 0;
 	
 	this.rotAngleZZ = 0.0;	
 
@@ -225,16 +225,59 @@ var sceneModels = [];
 // galinha for now
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -1;
+sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -0.5;
 sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.1;
+sceneModels[0].kDiff = [1,1,1];
 
 //obstaculo
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -0.5;
+sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -0.75;
 
 sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.1;
+sceneModels[1].kDiff = [0,0,1];
 
+// ob 2
+sceneModels.push( new simpleCubeModel() ); 
+
+sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -3;
+
+sceneModels[2].sx = sceneModels[2].sy = sceneModels[2].sz = 0.1;
+sceneModels[2].kDiff = [0,0,1];
+
+// chao
+sceneModels.push( new simpleCubeModel() );
+
+sceneModels[3].tx = 0.0; sceneModels[3].ty = -1; sceneModels[3].tz = -13;
+
+sceneModels[3].sx = 3;
+sceneModels[3].sy = 0.001;
+sceneModels[3].sz = 13;
+sceneModels[3].kDiff = [0.9,0.9,0.9];
+
+
+// "relva"
+sceneModels.push( new simpleCubeModel() );
+
+sceneModels[4].tx = 0.0; sceneModels[4].ty = -1; sceneModels[4].tz = -5;
+
+sceneModels[4].sx = 3;
+sceneModels[4].sy = 0.002;
+sceneModels[4].sz = 0.5;
+
+// cor
+sceneModels[4].kDiff = [0,1,0];
+
+// "relva"
+sceneModels.push( new simpleCubeModel() );
+
+sceneModels[5].tx = 0.0; sceneModels[5].ty = -1; sceneModels[5].tz = -7;
+
+sceneModels[5].sx = 3;
+sceneModels[5].sy = 0.002;
+sceneModels[5].sz = 0.5;
+//cor
+sceneModels[5].kDiff = [0,1,0];
 
 // Model 1 --- Top Right
 

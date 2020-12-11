@@ -17,6 +17,7 @@ var globalAngleYY = 0.0;
 
 var globalTx = 0.0;
 var globalTy = 0.0;
+var globalTz = 0.0;
 
 // GLOBAL Animation controls
 
@@ -267,8 +268,9 @@ function drawScene() {
 		
 		// Global transformation !!
 		
-		globalTy = -0.2;
-		globalTx = -0.2;
+		globalTy = -1;
+		globalTx = -0.5;
+		globalTz = -2.5;
 
 		// NEW --- The viewer is on (0,0,0)
 		
@@ -294,7 +296,7 @@ function drawScene() {
 	
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	
-	mvMatrix = translationMatrix( globalTx, globalTy, 0 );
+	mvMatrix = translationMatrix( globalTx, globalTy, globalTz);
 	
 	// NEW - Updating the position of the light sources, if required
 	
@@ -342,9 +344,13 @@ function drawScene() {
 }
 
 function colision(){
-	if ( Math.abs(sceneModels[0].tx - sceneModels[1].tx) <= 0.25 && Math.abs(sceneModels[0].ty - sceneModels[1].ty) <= 0.25 && Math.abs(sceneModels[0].tz - sceneModels[1].tz) <= 0.25){
-		alert("choque");
+	for(i = 1; i < sceneModels.length; i++){
+		if ( Math.abs(sceneModels[0].tx - sceneModels[i].tx) <= 0.2 && Math.abs(sceneModels[0].ty - sceneModels[i].ty) <= 0.2 
+																	&& Math.abs(sceneModels[0].tz - sceneModels[i].tz) <= 0.2){
+			alert("choque");
+		}
 	}
+	
 }
 
 //----------------------------------------------------------------------------
@@ -396,15 +402,15 @@ function animate() {
 		
 		// Rotating the light sources
 	
-		for(var i = 0; i < lightSources.length; i++ )
-	    {
-			if( lightSources[i].isRotYYOn() ) {
+		// for(var i = 0; i < lightSources.length; i++ )
+	    // {
+		// 	if( lightSources[i].isRotYYOn() ) {
 
-				var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
+		// 		var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
 		
-				lightSources[i].setRotAngleYY( angle );
-			}
-		}
+		// 		lightSources[i].setRotAngleYY( angle );
+		// 	}
+		// }
 }
 	
 	lastTime = timeNow;
@@ -553,16 +559,22 @@ function setEventListeners(){
 			}
 			break;
 			case 119 : // front
-				if (sceneModels[0].tz >= -12)
-				{
-					sceneModels[0].tz -= 0.25;
-				}	
+				// if (sceneModels[0].tz >= -12)
+				// {
+				// 	sceneModels[0].tz -= 0.25;
+				// }	
+				for(i = 1; i < sceneModels.length; i++){
+					sceneModels[i].tz += 0.25;
+				}
 			break;
 			case 115  : // back
-			if (sceneModels[0].tz <= 1.8)
-			{
-				sceneModels[0].tz += 0.25;
-			}		
+			// if (sceneModels[0].tz <= 1.8)
+			// {
+			// 	sceneModels[0].tz += 0.25;
+			// }	
+			for(i = 1; i < sceneModels.length; i++){
+				sceneModels[i].tz -= 0.25;
+			}	
 			break;
 		}
 
