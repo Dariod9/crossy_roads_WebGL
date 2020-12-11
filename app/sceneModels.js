@@ -225,15 +225,15 @@ var sceneModels = [];
 // galinha for now
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0;
-sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.2;
+sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -1;
+sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.1;
 
 //obstaculo
 sceneModels.push( new simpleCubeModel() );
 
 sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -0.5;
 
-sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.2;
+sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.1;
 
 
 // Model 1 --- Top Right

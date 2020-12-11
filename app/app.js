@@ -13,7 +13,7 @@ var triangleVertexNormalBuffer = null;
 
 // The GLOBAL transformation parameters
 
-var globalAngleYY = 30;
+var globalAngleYY = 0.0;
 
 var globalTz = 0.0;
 
@@ -335,6 +335,14 @@ function drawScene() {
 	// NEW - Counting the frames
 	
 	countFrames();
+
+	colision();
+}
+
+function colision(){
+	if ( Math.abs(sceneModels[0].tx - sceneModels[1].tx) <= 0.25 && Math.abs(sceneModels[0].ty - sceneModels[1].ty) <= 0.25 && Math.abs(sceneModels[0].tz - sceneModels[1].tz) <= 0.25){
+		alert("choque");
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -436,16 +444,26 @@ function setEventListeners(){
 	
 		switch(key){
 			case 97 : // left
-				sceneModels[0].tx -= 0.25;
+				if (sceneModels[0].tx >= -1){
+					sceneModels[0].tx -= 0.25;
+				}
 			break;
 			case 100 : //right
+			if (sceneModels[0].tx <= 1){
 				sceneModels[0].tx += 0.25;
+			}
 			break;
 			case 119 : // front
-				sceneModels[0].tz -= 0.25;	
+				if (sceneModels[0].tz >= -12)
+				{
+					sceneModels[0].tz -= 0.25;
+				}	
 			break;
 			case 115  : // back
-				sceneModels[0].tz += 0.25;	
+			if (sceneModels[0].tz <= 1.8)
+			{
+				sceneModels[0].tz += 0.25;
+			}		
 			break;
 		}
 
