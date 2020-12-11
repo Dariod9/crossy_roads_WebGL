@@ -500,12 +500,22 @@ function setEventListeners(){
 			
 			// Checking to see if the normals are defined on the file
 			
+			var chick = new emptyModelFeatures();
+			chick.vertices = vertices;
+			chick.normals = normals;
+
 			if( normals.length == 0 )
 			{
-				computeVertexNormals( vertices, normals );
+				computeVertexNormals( chick.vertices, chick.normals );
 			}
 						
 			// To render the model just read
+
+			sceneModels[0]=chick;
+
+			sceneModels[sceneModels.length].tx = 1; sceneModels[sceneModels.length].ty = 0.0; sceneModels[sceneModels.length].tz = -0.5;
+
+			sceneModels[sceneModels.length].sx = sceneModels[sceneModels.length].sy = sceneModels[sceneModels.length].sz = 0.1;
 		
 			initBuffers();
 
