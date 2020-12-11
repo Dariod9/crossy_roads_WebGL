@@ -297,6 +297,7 @@ function drawScene() {
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	
 	mvMatrix = translationMatrix( globalTx, globalTy, globalTz);
+
 	
 	// NEW - Updating the position of the light sources, if required
 	
@@ -511,6 +512,9 @@ function setEventListeners(){
 			var chick = new emptyModelFeatures();
 			chick.vertices = vertices;
 			chick.normals = normals;
+			chick.sx = 0.3; 
+			chick.sy = 0.3;
+			chick.sz = 0.3;
 
 			if( normals.length == 0 )
 			{
@@ -566,6 +570,14 @@ function setEventListeners(){
 				for(i = 1; i < sceneModels.length; i++){
 					sceneModels[i].tz += 0.25;
 				}
+				console.log(sceneModels[3].tz)
+				if(sceneModels[3].tz == 0.75){
+					console.log(roadModels);
+					for(i = 0; i < lista.length; i++){
+						sceneModels.push(lista[i]);
+					}
+					console.log(sceneModels + " - " + sceneModels.length);
+				}
 			break;
 			case 115  : // back
 			// if (sceneModels[0].tz <= 1.8)
@@ -575,6 +587,7 @@ function setEventListeners(){
 			for(i = 1; i < sceneModels.length; i++){
 				sceneModels[i].tz -= 0.25;
 			}	
+			
 			break;
 		}
 

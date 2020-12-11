@@ -222,17 +222,20 @@ function sphereModel( subdivisionDepth = 2 ) {
 
 var sceneModels = [];
 
+var roadModels = [];
+
 // galinha for now
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -0.5;
+sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -1;
 sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.1;
 sceneModels[0].kDiff = [1,1,1];
+
 
 //obstaculo
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -0.75;
+sceneModels[1].tx = -0.5; sceneModels[1].ty = 0.0; sceneModels[1].tz = -0.75;
 
 sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.1;
 sceneModels[1].kDiff = [0,0,1];
@@ -240,7 +243,7 @@ sceneModels[1].kDiff = [0,0,1];
 // ob 2
 sceneModels.push( new simpleCubeModel() ); 
 
-sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -3;
+sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -11;
 
 sceneModels[2].sx = sceneModels[2].sy = sceneModels[2].sz = 0.1;
 sceneModels[2].kDiff = [0,0,1];
@@ -253,7 +256,7 @@ sceneModels[3].tx = 0.0; sceneModels[3].ty = -0.3; sceneModels[3].tz = -13;
 sceneModels[3].sx = 3;
 sceneModels[3].sy = 0.001;
 sceneModels[3].sz = 13;
-sceneModels[3].kDiff = [0.1,0.1,0.1];
+sceneModels[3].kDiff = [0.18,0.18,0.18];
 
 
 // "relva"
@@ -278,6 +281,68 @@ sceneModels[5].sy = 0.002;
 sceneModels[5].sz = 0.5;
 //cor
 sceneModels[5].kDiff = [0,1,0];
+
+
+for(i = 1; i < sceneModels.length; i++){
+	roadModels.push(sceneModels[i]);
+}
+console.log(roadModels)
+console.log("111");
+
+
+var lista = [];
+
+//obstaculo
+lista.push( new simpleCubeModel() );
+
+lista[0].tx = 1; lista[0].ty = 0.0; lista[0].tz = -0.75 - 11.75;
+
+lista[0].sx = lista[0].sy = lista[0].sz = 0.1;
+lista[0].kDiff = [0,0,1];
+
+// ob 2
+lista.push( new simpleCubeModel() ); 
+
+lista[1].tx = 0.5; lista[1].ty = 0.0; lista[1].tz = -7 - 11.75;
+
+lista[1].sx = lista[1].sy = lista[1].sz = 0.1;
+lista[1].kDiff = [0,0,1];
+
+// chao
+lista.push( new simpleCubeModel() );
+
+lista[2].tx = 0.0; lista[2].ty = -0.3; lista[2].tz = -13 - 11.75;
+
+lista[2].sx = 3;
+lista[2].sy = 0.001;
+lista[2].sz = 13;
+lista[2].kDiff = [0.18,0.18,0.18];
+
+
+// "relva"
+lista.push( new simpleCubeModel() );
+
+lista[3].tx = 0.0; lista[3].ty = -0.3; lista[3].tz = -5 - 11.75;
+
+lista[3].sx = 3;
+lista[3].sy = 0.002;
+lista[3].sz = 0.5;
+
+// cor
+lista[3].kDiff = [0,1,0];
+
+// "relva"
+lista.push( new simpleCubeModel() );
+
+lista[4].tx = 0.0; lista[4].ty = -0.3; lista[4].tz = -7 - 11.75;
+
+lista[4].sx = 3;
+lista[4].sy = 0.002;
+lista[4].sz = 0.5;
+//cor
+lista[4].kDiff = [0,1,0];
+
+
 
 // Model 1 --- Top Right
 
