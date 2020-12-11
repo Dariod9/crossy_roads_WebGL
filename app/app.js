@@ -15,7 +15,8 @@ var triangleVertexNormalBuffer = null;
 
 var globalAngleYY = 0.0;
 
-var globalTz = 0.0;
+var globalTx = 0.0;
+var globalTy = 0.0;
 
 // GLOBAL Animation controls
 
@@ -242,7 +243,7 @@ function drawScene() {
 		
 		// Global transformation !!
 		
-		globalTz = 0.0;
+		globalTy = 0.0;
 		
 		// NEW --- The viewer is on the ZZ axis at an indefinite distance
 		
@@ -266,7 +267,8 @@ function drawScene() {
 		
 		// Global transformation !!
 		
-		globalTz = -2.5;
+		globalTy = -0.2;
+		globalTx = -0.2;
 
 		// NEW --- The viewer is on (0,0,0)
 		
@@ -292,7 +294,7 @@ function drawScene() {
 	
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	
-	mvMatrix = translationMatrix( 0, 0, globalTz );
+	mvMatrix = translationMatrix( globalTx, globalTy, 0 );
 	
 	// NEW - Updating the position of the light sources, if required
 	
