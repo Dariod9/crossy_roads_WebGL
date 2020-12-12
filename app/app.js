@@ -425,7 +425,7 @@ function animate() {
 		// }
 		//verifyMap();
 
-		moveMap(0.1)
+		moveMap(0.01)
 }
 	
 	lastTime = timeNow;
@@ -436,49 +436,85 @@ function moveMap(amount){
 	for(i = 1; i < sceneModels.length; i++){
 		sceneModels[i].tz += amount;		//arrasta tudo
 	}
-	if(checkBlocked())	sceneModels[getChicken()].tz +=amount; //arraste a galinha pq tem um bloco à frente
+	if(checkBlocked()[0])	sceneModels[getChicken()].tz += amount; //arraste a galinha pq tem um bloco à frente
 //	console.log(sceneModels + " - " + sceneModels.length);
 	verifyMap();
 }
 
 function moveMapChicken(amount){
 
-	if(!checkBlocked()){
+	if(!checkBlocked()[0]){
 		for(i = 1; i < sceneModels.length; i++){
 			sceneModels[i].tz += amount;
 		}
-		sceneModels[getChicken()].tz-= amount
+		sceneModels[getChicken()].tz -= amount;
 	}
 	verifyMap();
 }
 
+function moveLeftChicken(amount){
 
-function checkBlocked(){
+	if(!checkBlocked()[1]){
+		if (sceneModels[getChicken()].tx >= -1 - globalTx){
+			sceneModels[getChicken()].tx -= amount;
+		}
+	}
+	
+}
+
+function moveRightChicken(amount){
+	if(!checkBlocked()[2]){
+		if (sceneModels[getChicken()].tx <= 1 - globalTx){
+			sceneModels[getChicken()].tx += amount;
+		}
+	}	
+}
+
+// retorna 1 quando bloqueado
+function checkBlocked(){	
+	var move = [0,0,0]; // [0] -> andar para frente, 1 -> esquerda, 2 -> direita
 	var listaArbustos= [];
-	var move=0;
-	sceneModels.forEach(element => { if(element.type=="Block"){ var a=[element.tx, element.ty, element.tz]; listaArbustos.push(a);} })
+	sceneModels.forEach(element => { if(element.type == "Block"){ var a=[element.tx, element.ty, element.tz]; listaArbustos.push(a);} })
 
-	console.log(listaArbustos);
-	console.log("GALINHA: "+sceneModels[getChicken()].tz)
+	// console.log(listaArbustos);
+	// console.log("GALINHA: "+sceneModels[getChicken()].tz)
 
 	listaArbustos.forEach(element => {
-		console.log("TESTE"+element[2])
-		if(element[2]-sceneModels[getChicken()].tz>=-1 && Math.abs(element[0]-sceneModels[getChicken()].tx)<=0.3 && element[2]<0){
-			move=1;
-			console.log(element);
-			console.log("TZ ENTRE 0.5");
+		sameLineZ = 0;
+		if(element[2] - sceneModels[getChicken()].tz >= -0.5){
+			sameLineZ = 1;
+		}		
+
+		console.log("DISTANCIA:------------");
+		console.log(sameLineZ);
+		
+		if(element[2] - sceneModels[getChicken()].tz >= -1 && Math.abs(element[0] - sceneModels[getChicken()].tx) <= 0.3 && element[2] < 0){
+			move[0] = 1;
+		}
+		else if((element[0] - sceneModels[getChicken()].tx <= -0.5) && sameLineZ && (element[2] < 0)){	// esquerda
+			move[1] = 1;
+			console.log("elem a esquerda");
+			console.log(element[0] - sceneModels[getChicken()].tx);
+		}
+		else if((sceneModels[getChicken()].tx - element[0] >= -0.5) && sameLineZ && (element[2] < 0)){	// direita
+			move[2] = 1;
+			console.log("elem a direita");
+			console.log(sceneModels[getChicken()].tx - element[0]);
 		}
 	});
+	console.log(move);
 
 	return move;
 }
+
+
 function verifyMap(){
 	// console.log("PPOOOOOOOWWWWW")
 	var add=0;
 	var listaRemove= [];
 	sceneModels.forEach(element => { if(element.tz <=-14.5)add =1;});
-	console.log("COMPONENTES Z: ")
-	console.log(sceneModels.length)
+	// console.log("COMPONENTES Z: ")
+	// console.log(sceneModels.length)
 	sceneModels.forEach(element => {
 		 if(element.tz > 2){
 			var ind= sceneModels.indexOf(element);
@@ -490,7 +526,7 @@ function verifyMap(){
 	// }
 
 	if(add==0){
-		console.log("A ADICIONAR ");
+		// console.log("A ADICIONAR ");
 		// for(i = 0; i < lista.length; i++){
 		// 	sceneModels.push(lista[i])
 		extendMap();
@@ -499,7 +535,7 @@ function verifyMap(){
 	//}
 	}
 	
-	console.log("FLAG:" + add)
+	//console.log("FLAG:" + add)
 }
 
 function getChicken(){
@@ -653,15 +689,13 @@ function setEventListeners(){
 	
 		switch(key){
 			case 97 : // left
-				if (sceneModels[getChicken()].tx >= -1 - globalTx){
-					sceneModels[getChicken()].tx -= 0.5;
-				}
+				moveLeftChicken(0.5);
 			break;
+
 			case 100 : //right
-			if (sceneModels[getChicken()].tx <= 1 - globalTx){
-				sceneModels[getChicken()].tx += 0.5;
-			}
+				moveRightChicken(0.5);
 			break;
+
 			case 119 : // front
 				// if (sceneModels[0].tz >= -12)
 				// {
@@ -681,6 +715,7 @@ function setEventListeners(){
 				verifyMap();
 				//}
 			break;
+
 			case 115  : // back
 			// if (sceneModels[0].tz <= 1.8)
 			// {
