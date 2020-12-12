@@ -398,10 +398,11 @@ function animate() {
 		// 	}
 		// }
 		for(var i=0; i<sceneModels.length; i++){
-			if(i ==1 || i ==6 || i ==11 || i ==16 || i ==21 || i ==26 || i ==31 || i ==36 ||i ==41 ||i ==46 ||i ==51 ||i ==51 ||i ==55 ||i ==56)
-				sceneModels[i].tx -= 0.01;
-			else if(i ==2 || i ==7 || i ==12 || i ==17 || i ==22 || i ==27 || i ==32 || i ==37 ||i ==42 ||i ==47 ||i ==52 ||i ==57 ||i ==52 ||i ==57)
-				sceneModels[i].tx += 0.01;
+			if(i % 5 == 1)
+				sceneModels[i].tx -= 0.02;
+			else if(i % 5 == 2)
+				
+				sceneModels[i].tx += 0.02;
 		}
 		//sceneModels[0].tz -= 0.01;
 		
@@ -417,31 +418,44 @@ function animate() {
 		// 	}
 		// }
 		//verifyMap();
-		moveMap()
+		moveMap(0.1)
 }
 	
 	lastTime = timeNow;
 }
 
 
-function moveMap(){
-	for(i = 1; i < sceneModels.length; i++){
-		sceneModels[i].tz += 0.25;
+function moveMap(amount){
+	if(amount==0.1)
+		var t=0
+	else var t=1;
+	for(i = t; i < sceneModels.length; i++){
+		if(i==0) sceneModels[i].tz += amount/10;
+		else sceneModels[i].tz += amount;
 	}
 	console.log(sceneModels[3].tz)
 	console.log(sceneModels + " - " + sceneModels.length);
 	verifyMap();
 }
 
+function moveMapChicken(amount){
+	for(i = 1; i < sceneModels.length; i++){
+		sceneModels[i].tz += amount;
+	}
+	sceneModels[0].tz-= amount
+	verifyMap();
+}
+
 function verifyMap(){
 	// console.log("PPOOOOOOOWWWWW")
-	var flag=0;
-	sceneModels.forEach(element => { if(element.tz <=-14.5)flag =1;});
+	var add=0;
+	var remove
+	sceneModels.forEach(element => { if(element.tz <=-14.5)add =1;});
 	// for(var i=0; i<sceneModels.length;i++){
 	// 	console.log(sceneModels[i].tz)
 	// }
 
-	if(flag==0){
+	if(add==0){
 		console.log("A ADICIONAR ");
 		// for(i = 0; i < lista.length; i++){
 		// 	sceneModels.push(lista[i])
@@ -451,7 +465,7 @@ function verifyMap(){
 	//}
 	}
 	
-	console.log("FLAG:" + flag)
+	console.log("FLAG:" + add)
 }
 
 //----------------------------------------------------------------------------
@@ -581,6 +595,16 @@ function setEventListeners(){
 		reader.readAsText( file );		
 	}
 
+	document.addEventListener("click", function(event){
+
+		var x = event.offsetX;
+		console.log("x: "+x)
+		console.log("scena: "+sceneModels[0].tx)
+		if(x>225) sceneModels[0].tx+=0.25;
+		else sceneModels[0].tx-=0.25;		  
+
+	})
+
 	document.addEventListener("keypress", function(event){
 
 		// Getting the pressed key
@@ -589,13 +613,13 @@ function setEventListeners(){
 	
 		switch(key){
 			case 97 : // left
-				if (sceneModels[0].tx >= -1){
-					sceneModels[0].tx -= 0.25;
+				if (sceneModels[0].tx >= -1 - globalTx){
+					sceneModels[0].tx -= 0.5;
 				}
 			break;
 			case 100 : //right
-			if (sceneModels[0].tx <= 1){
-				sceneModels[0].tx += 0.25;
+			if (sceneModels[0].tx <= 1 - globalTx){
+				sceneModels[0].tx += 0.5;
 			}
 			break;
 			case 119 : // front
@@ -603,10 +627,11 @@ function setEventListeners(){
 				// {
 				// 	sceneModels[0].tz -= 0.25;
 				// }	
-				for(i = 1; i < sceneModels.length; i++){
-					sceneModels[i].tz += 0.25;
-				}
-				console.log(sceneModels[3].tz)
+				// for(i = 1; i < sceneModels.length; i++){
+				// 	sceneModels[i].tz += 0.25;
+				// }
+				moveMapChicken(0.35)
+				//console.log(sceneModels[3].tz)
 				// if(sceneModels[3].tz == 0.75){
 				// 	console.log(roadModels);
 				// 	for(i = 0; i < lista.length; i++){
@@ -621,9 +646,7 @@ function setEventListeners(){
 			// {
 			// 	sceneModels[0].tz += 0.25;
 			// }	
-			for(i = 1; i < sceneModels.length; i++){
-				sceneModels[i].tz -= 0.25;
-			}	
+			sceneModels[0].tz += 0.25;
 			
 			break;
 		}
