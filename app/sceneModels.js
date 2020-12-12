@@ -319,6 +319,26 @@ sceneModels[8].sy = relvasy;
 sceneModels[8].sz = relvasz;
 sceneModels[8].kDiff = [0,1,0];
 
+// arbusto 1
+sceneModels.push( new simpleCubeModel() );
+
+sceneModels[9].tx = 1; sceneModels[9].ty = 0.0; sceneModels[9].tz = -2.5;
+
+sceneModels[9].sx = 0.3;
+sceneModels[9].sy = 0.2;
+sceneModels[9].sz = 0.2;
+sceneModels[9].kDiff = [0,1,1];
+
+// arbusto 2
+sceneModels.push( new simpleCubeModel() );
+
+sceneModels[10].tx = 1; sceneModels[9].ty = 0.0; sceneModels[9].tz = -7.5;
+
+sceneModels[10].sx = 0.3;
+sceneModels[10].sy = 0.2;
+sceneModels[10].sz = 0.2;
+sceneModels[10].kDiff = [0,1,1];
+
 
 
 function getRandomArbitrary(min, max) {
@@ -410,6 +430,35 @@ function extendMap(){
 	sceneModels[a+7].sz = relvasz;
 	sceneModels[a+7].kDiff = [0,1,0];
 
+	// arbusto
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+8].tx = getRandomArbitrary(-1,1); sceneModels[a+8].ty = 0.0; sceneModels[a+8].tz = -2.5 + space;
+
+	sceneModels[a+8].sx = 0.3;
+	sceneModels[a+8].sy = 0.2;
+	sceneModels[a+8].sz = 0.4;
+	sceneModels[a+8].kDiff = [0,1,1];
+
+	// arbusto 2
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+9].tx = getRandomArbitrary(-1,1); sceneModels[a+9].ty = 0.0; sceneModels[a+9].tz = -7.5 + space;
+
+	sceneModels[a+9].sx = 0.3;
+	sceneModels[a+9].sy = 0.2;
+	sceneModels[a+9].sz = 0.4;
+	sceneModels[a+9].kDiff = [0,1,1];
+
+	// arbusto 3 - na mesma linha que o 2
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+10].tx = getRandomArbitrary(-1,1); sceneModels[a+10].ty = 0.0; sceneModels[a+10].tz = -7.5 + space;
+
+	sceneModels[a+10].sx = 0.3;
+	sceneModels[a+10].sy = 0.2;
+	sceneModels[a+10].sz = 0.4;
+	sceneModels[a+10].kDiff = [0,1,1];
 }
 
 

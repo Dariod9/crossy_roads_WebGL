@@ -397,13 +397,15 @@ function animate() {
 		// 		sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
 		// 	}
 		// }
-		for(var i=0; i<sceneModels.length; i++){
-			if(i % 5 == 1)
-				sceneModels[i].tx -= 0.02;
-			else if(i % 5 == 2)
+
+		// descomentar
+		// for(var i=0; i<sceneModels.length; i++){
+		// 	if(i % 5 == 1)
+		// 		sceneModels[i].tx -= 0.02;
+		// 	else if(i % 5 == 2)
 				
-				sceneModels[i].tx += 0.02;
-		}
+		// 		sceneModels[i].tx += 0.02;
+		// }
 
 
 		//sceneModels[0].tz -= 0.01;
@@ -420,7 +422,8 @@ function animate() {
 		// 	}
 		// }
 		//verifyMap();
-		moveMap(0.1)
+
+		//moveMap(0.1)
 }
 	
 	lastTime = timeNow;
@@ -564,9 +567,9 @@ function setEventListeners(){
 			var chick = new emptyModelFeatures();
 			chick.vertices = vertices;
 			chick.normals = normals;
-			chick.sx = 0.3; 
-			chick.sy = 0.3;
-			chick.sz = 0.3;
+			chick.sx = 0.5; 
+			chick.sy = 0.5;
+			chick.sz = 0.5;
 
 			if( normals.length == 0 )
 			{
