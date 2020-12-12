@@ -290,58 +290,115 @@ console.log(roadModels)
 console.log("111");
 
 
-var lista = [];
+// var lista = [];
 
-//obstaculo
-lista.push( new simpleCubeModel() );
+// //obstaculo
+// lista.push( new simpleCubeModel() );
 
-lista[0].tx = 1; lista[0].ty = 0.0; lista[0].tz = -0.75 - 11.75;
+// lista[0].tx = 1; lista[0].ty = 0.0; lista[0].tz = -0.75 - 11.75;
 
-lista[0].sx = lista[0].sy = lista[0].sz = 0.1;
-lista[0].kDiff = [0,0,1];
+// lista[0].sx = lista[0].sy = lista[0].sz = 0.1;
+// lista[0].kDiff = [0,0,1];
 
-// ob 2
-lista.push( new simpleCubeModel() ); 
+// // ob 2
+// lista.push( new simpleCubeModel() ); 
 
-lista[1].tx = 0.5; lista[1].ty = 0.0; lista[1].tz = -7 - 11.75;
+// lista[1].tx = 0.5; lista[1].ty = 0.0; lista[1].tz = -7 - 11.75;
 
-lista[1].sx = lista[1].sy = lista[1].sz = 0.1;
-lista[1].kDiff = [0,0,1];
+// lista[1].sx = lista[1].sy = lista[1].sz = 0.1;
+// lista[1].kDiff = [0,0,1];
 
-// chao
-lista.push( new simpleCubeModel() );
+// // chao
+// lista.push( new simpleCubeModel() );
 
-lista[2].tx = 0.0; lista[2].ty = -0.3; lista[2].tz = -13 - 11.75;
+// lista[2].tx = 0.0; lista[2].ty = -0.3; lista[2].tz = -13 - 11.75;
 
-lista[2].sx = 3;
-lista[2].sy = 0.001;
-lista[2].sz = 13;
-lista[2].kDiff = [0.18,0.18,0.18];
+// lista[2].sx = 3;
+// lista[2].sy = 0.001;
+// lista[2].sz = 13;
+// lista[2].kDiff = [0.18,0.18,0.18];
 
 
-// "relva"
-lista.push( new simpleCubeModel() );
+// // "relva"
+// lista.push( new simpleCubeModel() );
 
-lista[3].tx = 0.0; lista[3].ty = -0.3; lista[3].tz = -5 - 11.75;
+// lista[3].tx = 0.0; lista[3].ty = -0.3; lista[3].tz = -5 - 11.75;
 
-lista[3].sx = 3;
-lista[3].sy = 0.002;
-lista[3].sz = 0.5;
+// lista[3].sx = 3;
+// lista[3].sy = 0.002;
+// lista[3].sz = 0.5;
 
-// cor
-lista[3].kDiff = [0,1,0];
+// // cor
+// lista[3].kDiff = [0,1,0];
 
-// "relva"
-lista.push( new simpleCubeModel() );
+// // "relva"
+// lista.push( new simpleCubeModel() );
 
-lista[4].tx = 0.0; lista[4].ty = -0.3; lista[4].tz = -7 - 11.75;
+// lista[4].tx = 0.0; lista[4].ty = -0.3; lista[4].tz = -7 - 11.75;
 
-lista[4].sx = 3;
-lista[4].sy = 0.002;
-lista[4].sz = 0.5;
-//cor
-lista[4].kDiff = [0,1,0];
+// lista[4].sx = 3;
+// lista[4].sy = 0.002;
+// lista[4].sz = 0.5;
+// //cor
+// lista[4].kDiff = [0,1,0];
 
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function extendMap(){
+	//obstaculo
+	var a = sceneModels.length
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a].tx = getRandomArbitrary(-1,1); sceneModels[a].ty = 0.0; sceneModels[a].tz = -0.75 - 11.75;
+	console.log(sceneModels[a].tx)
+
+	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.1;
+	sceneModels[a].kDiff = [1,0,1];
+
+	// ob 2
+	sceneModels.push( new simpleCubeModel() ); 
+
+	sceneModels[a+1].tx = getRandomArbitrary(-1.1, 1.1); sceneModels[a+1].ty = 0.0; sceneModels[a+1].tz = -7 - 11.75;
+
+	sceneModels[a+1].sx = sceneModels[a+1].sy = sceneModels[a+1].sz = 0.1;
+	sceneModels[a+1].kDiff = [0,0,1];
+
+	// chao
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+2].tx = 0.0; sceneModels[a+2].ty = -0.3; sceneModels[a+2].tz = -13 - 11.75;
+
+	sceneModels[a+2].sx = 3;
+	sceneModels[a+2].sy = 0.001;
+	sceneModels[a+2].sz = 13;
+	sceneModels[a+2].kDiff = [0.18,0.18,0.18];
+
+
+	// "relva"
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+3].tx = 0.0; sceneModels[a+3].ty = -0.3; sceneModels[a+3].tz = -5 - 11.75;
+
+	sceneModels[a+3].sx = 3;
+	sceneModels[a+3].sy = 0.002;
+	sceneModels[a+3].sz = 0.5;
+
+	// cor
+	sceneModels[a+3].kDiff = [0,1,0];
+
+	// "relva"
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+4].tx = 0.0; sceneModels[a+4].ty = -0.3; sceneModels[a+4].tz = -7 - 11.75;
+
+	sceneModels[a+4].sx = 3;
+	sceneModels[a+4].sy = 0.002;
+	sceneModels[a+4].sz = 0.5;
+	//cor
+	sceneModels[a+4].kDiff = [0,1,0];
+}
 
 
 // Model 1 --- Top Right

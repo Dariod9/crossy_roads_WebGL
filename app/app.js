@@ -397,8 +397,12 @@ function animate() {
 		// 		sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
 		// 	}
 		// }
-
-		sceneModels[1].tx -= 0.01;
+		for(var i=0; i<sceneModels.length; i++){
+			if(i ==1 || i ==6 || i ==11 || i ==16 || i ==21 || i ==26 || i ==31 || i ==36 ||i ==41 ||i ==46 ||i ==51 ||i ==51 ||i ==55 ||i ==56)
+				sceneModels[i].tx -= 0.01;
+			else if(i ==2 || i ==7 || i ==12 || i ==17 || i ==22 || i ==27 || i ==32 || i ==37 ||i ==42 ||i ==47 ||i ==52 ||i ==57 ||i ==52 ||i ==57)
+				sceneModels[i].tx += 0.01;
+		}
 		//sceneModels[0].tz -= 0.01;
 		
 		// Rotating the light sources
@@ -412,11 +416,43 @@ function animate() {
 		// 		lightSources[i].setRotAngleYY( angle );
 		// 	}
 		// }
+		//verifyMap();
+		moveMap()
 }
 	
 	lastTime = timeNow;
 }
 
+
+function moveMap(){
+	for(i = 1; i < sceneModels.length; i++){
+		sceneModels[i].tz += 0.25;
+	}
+	console.log(sceneModels[3].tz)
+	console.log(sceneModels + " - " + sceneModels.length);
+	verifyMap();
+}
+
+function verifyMap(){
+	// console.log("PPOOOOOOOWWWWW")
+	var flag=0;
+	sceneModels.forEach(element => { if(element.tz <=-14.5)flag =1;});
+	// for(var i=0; i<sceneModels.length;i++){
+	// 	console.log(sceneModels[i].tz)
+	// }
+
+	if(flag==0){
+		console.log("A ADICIONAR ");
+		// for(i = 0; i < lista.length; i++){
+		// 	sceneModels.push(lista[i])
+		extendMap();
+		
+		//drawScene()
+	//}
+	}
+	
+	console.log("FLAG:" + flag)
+}
 
 //----------------------------------------------------------------------------
 
@@ -571,13 +607,14 @@ function setEventListeners(){
 					sceneModels[i].tz += 0.25;
 				}
 				console.log(sceneModels[3].tz)
-				if(sceneModels[3].tz == 0.75){
-					console.log(roadModels);
-					for(i = 0; i < lista.length; i++){
-						sceneModels.push(lista[i]);
-					}
-					console.log(sceneModels + " - " + sceneModels.length);
-				}
+				// if(sceneModels[3].tz == 0.75){
+				// 	console.log(roadModels);
+				// 	for(i = 0; i < lista.length; i++){
+				// 		sceneModels.push(lista[i]);
+				// 	}
+				console.log(sceneModels + " - " + sceneModels.length);
+				verifyMap();
+				//}
 			break;
 			case 115  : // back
 			// if (sceneModels[0].tz <= 1.8)
