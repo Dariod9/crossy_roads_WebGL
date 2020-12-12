@@ -67,6 +67,10 @@ function emptyModelFeatures() {
 	this.kSpec = [ 0.7, 0.7, 0.7 ];
 
 	this.nPhong = 100;
+
+	//TIPO DE OBJETO
+
+	this.type= null;
 }
 
 function singleTriangleModel( ) {
@@ -215,6 +219,9 @@ function sphereModel( subdivisionDepth = 2 ) {
 }
 
 
+//TIPOS
+
+var types= ["Enemy1", "Enemy2", "Enemy3", "Chicken", "Grass", "Road", "Block"];
 //----------------------------------------------------------------------------
 //
 //  Instantiating scene models
@@ -237,6 +244,7 @@ sceneModels.push( new simpleCubeModel() );
 sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -0.5;
 sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.2;
 sceneModels[0].kDiff = [1,1,1];
+sceneModels[0].type = "Chicken"
 
 
 //obstaculo
@@ -246,6 +254,7 @@ sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -1;
 
 sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.2;
 sceneModels[1].kDiff = [0,0,1];
+sceneModels[1].type = "Enemy1"
 
 // ob 2
 sceneModels.push( new simpleCubeModel() ); 
@@ -254,6 +263,7 @@ sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -11;
 
 sceneModels[2].sx = sceneModels[2].sy = sceneModels[2].sz = 0.2;
 sceneModels[2].kDiff = [0,0,1];
+sceneModels[2].type = "Enemy2"
 
 // chao
 sceneModels.push( new simpleCubeModel() );
@@ -264,6 +274,7 @@ sceneModels[3].sx = 3;
 sceneModels[3].sy = 0.001;
 sceneModels[3].sz = 13;
 sceneModels[3].kDiff = [0.18,0.18,0.18];
+sceneModels[3].type = "Road"
 
 
 // "relva"1
@@ -274,6 +285,8 @@ sceneModels[4].tx = relvatx; sceneModels[4].ty = relvaty; sceneModels[4].tz = -0
 sceneModels[4].sx = relvasx;
 sceneModels[4].sy = relvasy;
 sceneModels[4].sz = relvasz;
+sceneModels[4].type = "Grass"
+
 
 // cor
 sceneModels[4].kDiff = [0,1,0];
@@ -288,6 +301,8 @@ sceneModels[5].sy = relvasy;
 sceneModels[5].sz = relvasz;
 //cor
 sceneModels[5].kDiff = [0,1,0];
+sceneModels[5].type = "Grass"
+
 
 // relva3
 sceneModels.push( new simpleCubeModel() );
@@ -298,6 +313,8 @@ sceneModels[6].sx = relvasx;
 sceneModels[6].sy = relvasy;
 sceneModels[6].sz = relvasz;
 sceneModels[6].kDiff = [0,1,0];
+sceneModels[6].type = "Grass"
+
 
 // relva4
 sceneModels.push( new simpleCubeModel() );
@@ -308,6 +325,7 @@ sceneModels[7].sx = relvasx;
 sceneModels[7].sy = relvasy;
 sceneModels[7].sz = relvasz;
 sceneModels[7].kDiff = [0,1,0];
+sceneModels[7].type = "Grass"
 
 // relva5
 sceneModels.push( new simpleCubeModel() );
@@ -318,6 +336,8 @@ sceneModels[8].sx = relvasx;
 sceneModels[8].sy = relvasy;
 sceneModels[8].sz = relvasz;
 sceneModels[8].kDiff = [0,1,0];
+sceneModels[8].type = "Grass"
+
 
 // arbusto 1
 sceneModels.push( new simpleCubeModel() );
@@ -328,6 +348,8 @@ sceneModels[9].sx = 0.3;
 sceneModels[9].sy = 0.2;
 sceneModels[9].sz = 0.2;
 sceneModels[9].kDiff = [0,1,1];
+sceneModels[9].type = "Block"
+
 
 // arbusto 2
 sceneModels.push( new simpleCubeModel() );
@@ -338,6 +360,7 @@ sceneModels[10].sx = 0.3;
 sceneModels[10].sy = 0.2;
 sceneModels[10].sz = 0.2;
 sceneModels[10].kDiff = [0,1,1];
+sceneModels[10].type = "Block"
 
 
 
@@ -347,118 +370,165 @@ function getRandomArbitrary(min, max) {
 
 var space = -11.75;
 
-function extendMap(){
+function addEnemy1(){
 	//obstaculo
 	var a = sceneModels.length
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a].tx = getRandomArbitrary(-1,1); sceneModels[a].ty = 0.0; sceneModels[a].tz = -0.75 + space;
+	sceneModels[a].tx = getRandomArbitrary(-0.8,0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-0.75 + space-1, -0.75+space-0);
 	console.log(sceneModels[a].tx)
 
 	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
 	sceneModels[a].kDiff = [1,0,1];
+	sceneModels[a].type = "Enemy1"
+}
 
+function addEnemy2(){
 	// ob 2
+	var a = sceneModels.length
 	sceneModels.push( new simpleCubeModel() ); 
 
-	sceneModels[a+1].tx = getRandomArbitrary(-1.1, 1.1); sceneModels[a+1].ty = 0.0; sceneModels[a+1].tz = -7 + space;
+	sceneModels[a].tx = getRandomArbitrary(-0.8, 0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-2 + space-1, -2+space);
 
-	sceneModels[a+1].sx = sceneModels[a+1].sy = sceneModels[a+1].sz = 0.2;
-	sceneModels[a+1].kDiff = [0,0,1];
+	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
+	sceneModels[a].kDiff = [0,0,1];
+	sceneModels[a].type = "Enemy2"
+}
 
+function extendMap(){
+	// //obstaculo
+	// sceneModels.push( new simpleCubeModel() );
+
+	// sceneModels[a].tx = getRandomArbitrary(-1,1); sceneModels[a].ty = 0.0; sceneModels[a].tz = -0.75 + space;
+	// console.log(sceneModels[a].tx)
+
+	// sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
+	// sceneModels[a].kDiff = [1,0,1];
+	// sceneModels[a].type = "Enemy1"
+
+
+	var numEn1=Math.floor(getRandomArbitrary(0, 4));
+	for(var i=0;i<numEn1; i++) addEnemy1()
+
+	// ob 2
+	// sceneModels.push( new simpleCubeModel() ); 
+
+	// sceneModels[a+1].tx = getRandomArbitrary(-1.1, 1.1); sceneModels[a+1].ty = 0.0; sceneModels[a+1].tz = -7 + space;
+
+	// sceneModels[a+1].sx = sceneModels[a+1].sy = sceneModels[a+1].sz = 0.2;
+	// sceneModels[a+1].kDiff = [0,0,1];
+	// sceneModels[a+1].type = "Enemy2"
+
+
+	var numEn2=Math.floor(getRandomArbitrary(0, 3));
+	for(var i=0;i<numEn2; i++) addEnemy2()
+
+	
+	var a = sceneModels.length
 	// chao
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a+2].tx = 0.0; sceneModels[a+2].ty = -0.3; sceneModels[a+2].tz = -13 + space;
+	sceneModels[a].tx = 0.0; sceneModels[a].ty = -0.3; sceneModels[a].tz = -13 + space;
 
-	sceneModels[a+2].sx = 3;
-	sceneModels[a+2].sy = 0.001;
-	sceneModels[a+2].sz = 13;
-	sceneModels[a+2].kDiff = [0.18,0.18,0.18];
+	sceneModels[a].sx = 3;
+	sceneModels[a].sy = 0.001;
+	sceneModels[a].sz = 13;
+	sceneModels[a].kDiff = [0.18,0.18,0.18];
+	sceneModels[a].type = "Road"
+
 
 
 	// "relva"1
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a+3].tx = relvatx; sceneModels[a+3].ty = relvaty; sceneModels[a+3].tz = -0.5 + space;
+	sceneModels[a+1].tx = relvatx; sceneModels[a+1].ty = relvaty; sceneModels[a+1].tz = -0.5 + space;
 
-	sceneModels[a+3].sx = relvasx;
-	sceneModels[a+3].sy = relvasy;
-	sceneModels[a+3].sz = relvasz;
+	sceneModels[a+1].sx = relvasx;
+	sceneModels[a+1].sy = relvasy;
+	sceneModels[a+1].sz = relvasz;
+	sceneModels[a+1].type = "Grass"
+
 
 	// cor
-	sceneModels[a+3].kDiff = [0,1,0];
+	sceneModels[a+1].kDiff = [0,1,0];
 
 	// "relva"2
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a+4].tx = relvatx; sceneModels[a+4].ty = relvaty; sceneModels[a+4].tz = -3 + space;
+	sceneModels[a+2].tx = relvatx; sceneModels[a+2].ty = relvaty; sceneModels[a+2].tz = -3 + space;
 
-	sceneModels[a+4].sx = relvasx;
-	sceneModels[a+4].sy = relvasy;
-	sceneModels[a+4].sz = relvasz;
+	sceneModels[a+2].sx = relvasx;
+	sceneModels[a+2].sy = relvasy;
+	sceneModels[a+2].sz = relvasz;
 	//cor
-	sceneModels[a+4].kDiff = [0,1,0];
+	sceneModels[a+2].kDiff = [0,1,0];
+	sceneModels[a+2].type = "Grass"
 
 	// relva3
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a+5].tx = relvatx; sceneModels[a+5].ty = relvaty; sceneModels[a+5].tz = -5.5 + space;
+	sceneModels[a+3].tx = relvatx; sceneModels[a+3].ty = relvaty; sceneModels[a+3].tz = -5.5 + space;
+
+	sceneModels[a+3].sx = relvasx;
+	sceneModels[a+3].sy = relvasy;
+	sceneModels[a+3].sz = relvasz;
+	sceneModels[a+3].kDiff = [0,1,0];
+	sceneModels[a+3].type = "Grass"
+
+	// relva4
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+4].tx = relvatx; sceneModels[a+4].ty = relvaty; sceneModels[a+4].tz = -8 + space;
+
+	sceneModels[a+4].sx = relvasx;
+	sceneModels[a+4].sy = relvasy;
+	sceneModels[a+4].sz = relvasz;
+	sceneModels[a+4].kDiff = [0,1,0];
+	sceneModels[a+4].type = "Grass"
+
+	// relva5
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+5].tx = relvatx; sceneModels[a+5].ty = relvaty; sceneModels[a+5].tz = -10.5 + space;
 
 	sceneModels[a+5].sx = relvasx;
 	sceneModels[a+5].sy = relvasy;
 	sceneModels[a+5].sz = relvasz;
 	sceneModels[a+5].kDiff = [0,1,0];
-
-	// relva4
-	sceneModels.push( new simpleCubeModel() );
-
-	sceneModels[a+6].tx = relvatx; sceneModels[a+6].ty = relvaty; sceneModels[a+6].tz = -8 + space;
-
-	sceneModels[a+6].sx = relvasx;
-	sceneModels[a+6].sy = relvasy;
-	sceneModels[a+6].sz = relvasz;
-	sceneModels[a+6].kDiff = [0,1,0];
-
-	// relva5
-	sceneModels.push( new simpleCubeModel() );
-
-	sceneModels[a+7].tx = relvatx; sceneModels[a+7].ty = relvaty; sceneModels[a+7].tz = -10.5 + space;
-
-	sceneModels[a+7].sx = relvasx;
-	sceneModels[a+7].sy = relvasy;
-	sceneModels[a+7].sz = relvasz;
-	sceneModels[a+7].kDiff = [0,1,0];
+	sceneModels[a+5].type = "Grass"
 
 	// arbusto
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a+8].tx = getRandomArbitrary(-1,1); sceneModels[a+8].ty = 0.0; sceneModels[a+8].tz = -2.5 + space;
+	sceneModels[a+6].tx = getRandomArbitrary(-1,1); sceneModels[a+6].ty = 0.0; sceneModels[a+6].tz = -2.5 + space;
+
+	sceneModels[a+6].sx = 0.3;
+	sceneModels[a+6].sy = 0.2;
+	sceneModels[a+6].sz = 0.4;
+	sceneModels[a+6].kDiff = [0,1,1];
+	sceneModels[a+6].type = "Block"
+
+	// arbusto 2
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+7].tx = getRandomArbitrary(-1,1); sceneModels[a+7].ty = 0.0; sceneModels[a+7].tz = -7.5 + space;
+
+	sceneModels[a+7].sx = 0.3;
+	sceneModels[a+7].sy = 0.2;
+	sceneModels[a+7].sz = 0.4;
+	sceneModels[a+7].kDiff = [0,1,1];
+	sceneModels[a+7].type = "Block"
+
+	// arbusto 3 - na mesma linha que o 2
+	sceneModels.push( new simpleCubeModel() );
+
+	sceneModels[a+8].tx = getRandomArbitrary(-1,1); sceneModels[a+8].ty = 0.0; sceneModels[a+8].tz = -7.5 + space;
 
 	sceneModels[a+8].sx = 0.3;
 	sceneModels[a+8].sy = 0.2;
 	sceneModels[a+8].sz = 0.4;
 	sceneModels[a+8].kDiff = [0,1,1];
-
-	// arbusto 2
-	sceneModels.push( new simpleCubeModel() );
-
-	sceneModels[a+9].tx = getRandomArbitrary(-1,1); sceneModels[a+9].ty = 0.0; sceneModels[a+9].tz = -7.5 + space;
-
-	sceneModels[a+9].sx = 0.3;
-	sceneModels[a+9].sy = 0.2;
-	sceneModels[a+9].sz = 0.4;
-	sceneModels[a+9].kDiff = [0,1,1];
-
-	// arbusto 3 - na mesma linha que o 2
-	sceneModels.push( new simpleCubeModel() );
-
-	sceneModels[a+10].tx = getRandomArbitrary(-1,1); sceneModels[a+10].ty = 0.0; sceneModels[a+10].tz = -7.5 + space;
-
-	sceneModels[a+10].sx = 0.3;
-	sceneModels[a+10].sy = 0.2;
-	sceneModels[a+10].sz = 0.4;
-	sceneModels[a+10].kDiff = [0,1,1];
+	sceneModels[a+8].type = "Block"
 }
 
 

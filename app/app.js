@@ -345,10 +345,12 @@ function drawScene() {
 }
 
 function colision(){
-	for(i = 1; i < 3; i++){
-		if ( Math.abs(sceneModels[0].tx - sceneModels[i].tx) <= 0.4 && Math.abs(sceneModels[0].ty - sceneModels[i].ty) <= 0.4 
-																	&& Math.abs(sceneModels[0].tz - sceneModels[i].tz) <= 0.4){
-			alert("choque");
+	for(i = 0; i < sceneModels.length; i++){
+		if(sceneModels[i].type == "Enemy1" || sceneModels[i].type == "Enemy2"){
+			if ( Math.abs(sceneModels[getChicken()].tx - sceneModels[i].tx) <= 0.4 && Math.abs(sceneModels[getChicken()].ty - sceneModels[i].ty) <= 0.4 
+																		&& Math.abs(sceneModels[getChicken()].tz - sceneModels[i].tz) <= 0.4){
+				alert("choque");
+			}
 		}
 	}
 	
@@ -398,14 +400,14 @@ function animate() {
 		// 	}
 		// }
 
-		// descomentar
-		// for(var i=0; i<sceneModels.length; i++){
-		// 	if(i % 5 == 1)
-		// 		sceneModels[i].tx -= 0.02;
-		// 	else if(i % 5 == 2)
+		//descomentar
+		for(var i=0; i<sceneModels.length; i++){
+			if(sceneModels[i].type=="Enemy1")
+				sceneModels[i].tx -= 0.02;
+			else if(sceneModels[i].type=="Enemy2")
 				
-		// 		sceneModels[i].tx += 0.02;
-		// }
+				sceneModels[i].tx += 0.02;
+		}
 
 
 		//sceneModels[0].tz -= 0.01;
@@ -423,7 +425,7 @@ function animate() {
 		// }
 		//verifyMap();
 
-		//moveMap(0.1)
+		moveMap(0.1)
 }
 	
 	lastTime = timeNow;
@@ -431,31 +433,58 @@ function animate() {
 
 
 function moveMap(amount){
-	if(amount==0.1)
-		var t=0
-	else var t=1;
-	for(i = t; i < sceneModels.length; i++){
-		if(i==0) sceneModels[i].tz += amount/10;
-		else sceneModels[i].tz += amount;
+	for(i = 1; i < sceneModels.length; i++){
+		sceneModels[i].tz += amount;		//arrasta tudo
 	}
-	console.log(sceneModels[3].tz)
-	console.log(sceneModels + " - " + sceneModels.length);
+	if(checkBlocked())	sceneModels[getChicken()].tz +=amount; //arraste a galinha pq tem um bloco à frente
+//	console.log(sceneModels + " - " + sceneModels.length);
 	verifyMap();
 }
 
 function moveMapChicken(amount){
-	for(i = 1; i < sceneModels.length; i++){
-		sceneModels[i].tz += amount;
+
+	if(!checkBlocked()){
+		for(i = 1; i < sceneModels.length; i++){
+			sceneModels[i].tz += amount;
+		}
+		sceneModels[getChicken()].tz-= amount
 	}
-	sceneModels[0].tz-= amount
 	verifyMap();
 }
 
+
+function checkBlocked(){
+	var listaArbustos= [];
+	var move=0;
+	sceneModels.forEach(element => { if(element.type=="Block"){ var a=[element.tx, element.ty, element.tz]; listaArbustos.push(a);} })
+
+	console.log(listaArbustos);
+	console.log("GALINHA: "+sceneModels[getChicken()].tz)
+
+	listaArbustos.forEach(element => {
+		console.log("TESTE"+element[2])
+		if(element[2]-sceneModels[getChicken()].tz>=-1 && Math.abs(element[0]-sceneModels[getChicken()].tx)<=0.3 && element[2]<0){
+			move=1;
+			console.log(element);
+			console.log("TZ ENTRE 0.5");
+		}
+	});
+
+	return move;
+}
 function verifyMap(){
 	// console.log("PPOOOOOOOWWWWW")
 	var add=0;
-	var remove
+	var listaRemove= [];
 	sceneModels.forEach(element => { if(element.tz <=-14.5)add =1;});
+	console.log("COMPONENTES Z: ")
+	console.log(sceneModels.length)
+	sceneModels.forEach(element => {
+		 if(element.tz > 2){
+			var ind= sceneModels.indexOf(element);
+			sceneModels.splice(ind,1);
+		}			
+	 });
 	// for(var i=0; i<sceneModels.length;i++){
 	// 	console.log(sceneModels[i].tz)
 	// }
@@ -471,6 +500,12 @@ function verifyMap(){
 	}
 	
 	console.log("FLAG:" + add)
+}
+
+function getChicken(){
+	var index=0;
+	sceneModels.forEach(element => {if(element.type == "Chicken") index = sceneModels.indexOf(element);})
+	return index;
 }
 
 //----------------------------------------------------------------------------
@@ -604,9 +639,9 @@ function setEventListeners(){
 
 		var x = event.offsetX;
 		console.log("x: "+x)
-		console.log("scena: "+sceneModels[0].tx)
-		if(x>225) sceneModels[0].tx+=0.25;
-		else sceneModels[0].tx-=0.25;		  
+		console.log("scena: "+sceneModels[getChicken()].tx)
+		if(x>225) sceneModels[getChicken()].tx+=0.25;
+		else sceneModels[getChicken()].tx-=0.25;		  
 
 	})
 
@@ -618,13 +653,13 @@ function setEventListeners(){
 	
 		switch(key){
 			case 97 : // left
-				if (sceneModels[0].tx >= -1 - globalTx){
-					sceneModels[0].tx -= 0.5;
+				if (sceneModels[getChicken()].tx >= -1 - globalTx){
+					sceneModels[getChicken()].tx -= 0.5;
 				}
 			break;
 			case 100 : //right
-			if (sceneModels[0].tx <= 1 - globalTx){
-				sceneModels[0].tx += 0.5;
+			if (sceneModels[getChicken()].tx <= 1 - globalTx){
+				sceneModels[getChicken()].tx += 0.5;
 			}
 			break;
 			case 119 : // front
@@ -651,7 +686,7 @@ function setEventListeners(){
 			// {
 			// 	sceneModels[0].tz += 0.25;
 			// }	
-			sceneModels[0].tz += 0.25;
+			sceneModels[getChicken()].tz += 0.25;
 			
 			break;
 		}
