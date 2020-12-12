@@ -268,9 +268,9 @@ function drawScene() {
 		
 		// Global transformation !!
 		
-		globalTy = -1;
+		globalTy = -1.5;
 		globalTx = -0.5;
-		globalTz = -2.5;
+		globalTz = -4;
 
 		// NEW --- The viewer is on (0,0,0)
 		
@@ -345,9 +345,9 @@ function drawScene() {
 }
 
 function colision(){
-	for(i = 1; i < sceneModels.length; i++){
-		if ( Math.abs(sceneModels[0].tx - sceneModels[i].tx) <= 0.2 && Math.abs(sceneModels[0].ty - sceneModels[i].ty) <= 0.2 
-																	&& Math.abs(sceneModels[0].tz - sceneModels[i].tz) <= 0.2){
+	for(i = 1; i < 3; i++){
+		if ( Math.abs(sceneModels[0].tx - sceneModels[i].tx) <= 0.4 && Math.abs(sceneModels[0].ty - sceneModels[i].ty) <= 0.4 
+																	&& Math.abs(sceneModels[0].tz - sceneModels[i].tz) <= 0.4){
 			alert("choque");
 		}
 	}
@@ -404,6 +404,8 @@ function animate() {
 				
 				sceneModels[i].tx += 0.02;
 		}
+
+
 		//sceneModels[0].tz -= 0.01;
 		
 		// Rotating the light sources
