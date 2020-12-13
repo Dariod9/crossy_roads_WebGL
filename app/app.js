@@ -346,6 +346,20 @@ function drawScene() {
 	colision();
 }
 
+function verifyLoss(){
+	if(sceneModels[getChicken()].tz>1){
+		sceneModels[getChicken()].tz=-0.5;
+		initScenes();
+		drawScene();
+		alert("YOU LOST!");
+		var secondsLabel = document.getElementById("score");
+		secondsLabel.innerHTML=0;
+		var niv = document.getElementById("nivel");
+		niv.innerHTML=0;
+		
+	}
+}
+
 function colision(){
 	for(i = 0; i < sceneModels.length; i++){
 		if(sceneModels[i].type == "Enemy1" || sceneModels[i].type == "Enemy2"){
@@ -417,7 +431,7 @@ function animate() {
 		// 	}
 		// }
 		//verifyMap();
-
+		verifyLoss();
 		moveMap(0.05)
 }
 	
@@ -427,7 +441,8 @@ function animate() {
 
 function moveMap(amount){
 	for(i = 1; i < sceneModels.length; i++){
-		sceneModels[i].tz += amount;		//arrasta tudo
+		if(sceneModels[i].type == "Cloud") sceneModels[i].tz += 0.002
+		else sceneModels[i].tz += amount;		//arrasta tudo
 	}
 	if(checkBlocked()[0])	sceneModels[getChicken()].tz += amount; //arraste a galinha pq tem um bloco à frente
 //	console.log(sceneModels + " - " + sceneModels.length);
@@ -438,9 +453,10 @@ function moveMapChicken(amount){
 
 	if(!checkBlocked()[0]){
 		for(i = 1; i < sceneModels.length; i++){
-			sceneModels[i].tz += amount;
+			if(sceneModels[i].type == "Cloud") sceneModels[i].tz += 0.002
+			else sceneModels[i].tz += amount;
 		}
-		sceneModels[getChicken()].tz -= amount;
+		if(sceneModels[getChicken()].tz>=-10) sceneModels[getChicken()].tz -= amount;
 	}
 	verifyMap();
 }
@@ -668,10 +684,13 @@ function setEventListeners(){
 	document.addEventListener("click", function(event){
 
 		var x = event.offsetX;
+		var y = event.offsetY;
 		console.log("x: "+x)
 		console.log("scena: "+sceneModels[getChicken()].tx)
-		if(x>225) sceneModels[getChicken()].tx+=0.25;
-		else sceneModels[getChicken()].tx-=0.25;		  
+		if(y>30){
+			if(x>270) sceneModels[getChicken()].tx+=0.25;
+			else sceneModels[getChicken()].tx-=0.25;		  
+		}
 
 	})
 

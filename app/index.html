@@ -89,12 +89,40 @@
                   </div>
                 <div class="row h-100 align-items-center justify-content-center text-center">
                   <div>
-                    <p>Enemies Speed</p>
+                    <p style="font-family: crossyRoads; color: #f1f1f1;">Enemies Speed</p>
                     <button id="increase-enemies-speed">+</button>
                     <button id="decrease-enemies-speed">-</button>
                   </div>
                     <div class="col-lg-8 align-self-baseline">
                         <canvas id="game-surface" style="border:1px solid #000000;" width="550" height="550"></canvas>
+                    </div>
+                    <div>
+                      <p style="font-family: crossyRoads; color: #f1f1f1;"> Nivel:</p>
+                      <p style="font-family: crossyRoads; color: #f1f1f1;" id="nivel">1</p>
+                      <br>
+                      <script>
+                        var niv=document.getElementById("nivel");
+                        var nivel=1
+                        setInterval(setNivel, 5000)
+
+                        function setNivel(){
+                          nivel++;
+                          niv.innerHTML=nivel;
+                        }
+
+                      </script>
+                      <p style="font-family: crossyRoads; color: #f1f1f1;">Score: </p>
+                      <p style="font-family: crossyRoads; color: #f1f1f1;" id="score"></p>
+                      <script>
+                      var secondsLabel = document.getElementById("score");
+                      var totalSeconds = 0;
+                      setInterval(setTime, 100);
+
+                      function setTime() {
+                        ++totalSeconds;
+                        secondsLabel.innerHTML = totalSeconds;
+                      }
+                      </script>
                     </div>
                     <div style="text-align: center">
                       <h3>Instructions:</h3>
