@@ -41,6 +41,8 @@ var projectionType = 1;
 
 var pos_Viewer = [ 0.0, 0.0, 0.0, 1.0 ];
 
+var enemies_speed = 0.02;
+
 
 
 //----------------------------------------------------------------------------
@@ -349,7 +351,7 @@ function colision(){
 		if(sceneModels[i].type == "Enemy1" || sceneModels[i].type == "Enemy2"){
 			if ( Math.abs(sceneModels[getChicken()].tx - sceneModels[i].tx) <= 0.4 && Math.abs(sceneModels[getChicken()].ty - sceneModels[i].ty) <= 0.4 
 																		&& Math.abs(sceneModels[getChicken()].tz - sceneModels[i].tz) <= 0.4){
-				alert("choque");
+				alert("Ups! You collided! Click OK to play again!");
 			}
 		}
 	}
@@ -380,37 +382,15 @@ function animate() {
 			globalAngleYY += globalRotationYY_DIR * globalRotationYY_SPEED * (90 * elapsed) / 1000.0;
 	    }
 
-		// For every model --- Local rotations
-		// "dançar"
-		// for(var i = 0; i < 5; i++ )
-	    // {
-		// 	if( sceneModels[i].rotXXOn ) {
-
-		// 		sceneModels[i].rotAngleXX += sceneModels[i].rotXXDir * sceneModels[i].rotXXSpeed * (90 * elapsed) / 1000.0;
-		// 	}
-
-		// 	if( sceneModels[i].rotYYOn ) {
-
-		// 		sceneModels[i].rotAngleYY += sceneModels[i].rotYYDir * sceneModels[i].rotYYSpeed * (90 * elapsed) / 1000.0;
-		// 	}
-
-		// 	if( sceneModels[i].rotZZOn ) {
-
-		// 		sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
-		// 	}
-		// }
-
 		//descomentar
 		for(var i=0; i<sceneModels.length; i++){
-			if(sceneModels[i].type=="Enemy1")
+			if(sceneModels[i].type == "Enemy1")
 				sceneModels[i].tx -= 0.02;
-			else if(sceneModels[i].type=="Enemy2")
 				
+			if(sceneModels[i].type=="Enemy2"){
 				sceneModels[i].tx += 0.02;
+			}
 		}
-
-
-		//sceneModels[0].tz -= 0.01;
 		
 		// Rotating the light sources
 	
@@ -425,7 +405,7 @@ function animate() {
 		// }
 		//verifyMap();
 
-		moveMap(0.01)
+		moveMap(0.05)
 }
 	
 	lastTime = timeNow;
@@ -481,7 +461,7 @@ function checkBlocked(){
 
 	listaArbustos.forEach(element => {
 		sameLineZ = 0;
-		if(element[2] - sceneModels[getChicken()].tz >= -0.5){
+		if(element[2] - sceneModels[getChicken()].tz >= -0.5 && element[2] - sceneModels[getChicken()].tz <= -0.5){
 			sameLineZ = 1;
 		}		
 
@@ -641,6 +621,7 @@ function setEventListeners(){
 			chick.sx = 0.5; 
 			chick.sy = 0.5;
 			chick.sz = 0.5;
+			chick.type = "Chicken";
 
 			if( normals.length == 0 )
 			{
@@ -721,14 +702,21 @@ function setEventListeners(){
 			// {
 			// 	sceneModels[0].tz += 0.25;
 			// }	
-			sceneModels[getChicken()].tz += 0.25;
+			sceneModels[getChicken()].tz += 0.5;
 			
 			break;
 		}
 
 			drawScene();
 	});
+
+	document.getElementById("increase-enemies-speed").onclick = function(){
+		enemies_speed += 0.01;	
+	}; 
 	
+	document.getElementById("decrease-enemies-speed").onclick = function(){
+		enemies_speed -= 0.01;	
+	}; 
 
 	var projection = document.getElementById("projection-selection");
 	
@@ -996,6 +984,8 @@ function runWebGL() {
 	initWebGL( canvas );
 
 	shaderProgram = initShaders( gl );
+
+	//gl.clearColor(0.2,0.2,1,1);
 	
 	setEventListeners();
 	

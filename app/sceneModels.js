@@ -227,6 +227,9 @@ var types= ["Enemy1", "Enemy2", "Enemy3", "Chicken", "Grass", "Road", "Block"];
 //  Instantiating scene models
 //
 
+// ZZ dos inimigos para estarem sempre na estrada:
+// (-0.9,-1.4, -1.8), (-3.4, -4.3), (-5.9, -6.8), (-8.4, -9.3), (-10.9, -11.8)
+
 var relvatx = 0.0;
 var relvaty = -0.3;
 // tz -> variavel
@@ -250,7 +253,7 @@ sceneModels[0].type = "Chicken"
 //obstaculo
 sceneModels.push( new simpleCubeModel() );
 
-sceneModels[1].tx = 1; sceneModels[1].ty = 0.0; sceneModels[1].tz = -1;
+sceneModels[1].tx = 1.5; sceneModels[1].ty = 0.0; sceneModels[1].tz = -3.4;
 
 sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.2;
 sceneModels[1].kDiff = [0,0,1];
@@ -259,7 +262,7 @@ sceneModels[1].type = "Enemy1"
 // ob 2
 sceneModels.push( new simpleCubeModel() ); 
 
-sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -11;
+sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -4.3;
 
 sceneModels[2].sx = sceneModels[2].sy = sceneModels[2].sz = 0.2;
 sceneModels[2].kDiff = [0,0,1];
@@ -362,6 +365,24 @@ sceneModels[10].sz = 0.2;
 sceneModels[10].kDiff = [0,1,1];
 sceneModels[10].type = "Block"
 
+// addEnemy1(-1);
+// addEnemy2(-1.4);
+addEnemy2(-1.9);
+
+addEnemy2(-3.4);
+addEnemy1(-4.3);
+
+addEnemy1(-5.9);
+addEnemy2(-6.8);
+
+addEnemy2(-8.4);
+addEnemy1(-9.3);
+
+addEnemy2(-10.9);
+addEnemy1(-11.8);
+
+
+//--------------
 
 
 function getRandomArbitrary(min, max) {
@@ -370,12 +391,13 @@ function getRandomArbitrary(min, max) {
 
 var space = -11.75;
 
-function addEnemy1(){
+function addEnemy1(z_value){		// anda para a esquerda
 	//obstaculo
 	var a = sceneModels.length
 	sceneModels.push( new simpleCubeModel() );
 
-	sceneModels[a].tx = getRandomArbitrary(-0.8,0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-0.75 + space-1, -0.75+space-0);
+	//sceneModels[a].tx = getRandomArbitrary(-0.8,0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-0.75 + space-1, -0.75+space-0);
+	sceneModels[a].tx = getRandomArbitrary(0,3); sceneModels[a].ty = 0.0; sceneModels[a].tz = z_value;
 	console.log(sceneModels[a].tx)
 
 	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
@@ -383,12 +405,13 @@ function addEnemy1(){
 	sceneModels[a].type = "Enemy1"
 }
 
-function addEnemy2(){
+function addEnemy2(z_value){	// anda para a direita
 	// ob 2
 	var a = sceneModels.length
 	sceneModels.push( new simpleCubeModel() ); 
 
-	sceneModels[a].tx = getRandomArbitrary(-0.8, 0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-2 + space-1, -2+space);
+	//sceneModels[a].tx = getRandomArbitrary(-0.8, 0.8); sceneModels[a].ty = 0.0; sceneModels[a].tz = getRandomArbitrary(-2 + space-1, -2+space);
+	sceneModels[a].tx = getRandomArbitrary(-3, 0); sceneModels[a].ty = 0.0; sceneModels[a].tz = z_value;
 
 	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
 	sceneModels[a].kDiff = [0,0,1];
@@ -396,33 +419,29 @@ function addEnemy2(){
 }
 
 function extendMap(){
-	// //obstaculo
-	// sceneModels.push( new simpleCubeModel() );
 
-	// sceneModels[a].tx = getRandomArbitrary(-1,1); sceneModels[a].ty = 0.0; sceneModels[a].tz = -0.75 + space;
-	// console.log(sceneModels[a].tx)
-
-	// sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
-	// sceneModels[a].kDiff = [1,0,1];
-	// sceneModels[a].type = "Enemy1"
+	// var numEn1 = Math.floor(getRandomArbitrary(0, 4));
+	// for(var i = 0; i < numEn1; i++) addEnemy1()
 
 
-	var numEn1=Math.floor(getRandomArbitrary(0, 4));
-	for(var i=0;i<numEn1; i++) addEnemy1()
+	// var numEn2 = Math.floor(getRandomArbitrary(0, 3));
+	// for(var i = 0; i < numEn2; i++) addEnemy2()
 
-	// ob 2
-	// sceneModels.push( new simpleCubeModel() ); 
+	addEnemy1(-1 + space);
+	addEnemy2(-1.4 + space);
+	addEnemy1(-1.9 + space);
 
-	// sceneModels[a+1].tx = getRandomArbitrary(-1.1, 1.1); sceneModels[a+1].ty = 0.0; sceneModels[a+1].tz = -7 + space;
+	addEnemy2(-3.4 + space);
+	addEnemy1(-4.3 + space);
 
-	// sceneModels[a+1].sx = sceneModels[a+1].sy = sceneModels[a+1].sz = 0.2;
-	// sceneModels[a+1].kDiff = [0,0,1];
-	// sceneModels[a+1].type = "Enemy2"
+	addEnemy1(-5.9 + space);
+	addEnemy2(-6.8 + space);
 
+	addEnemy2(-8.4 + space);
+	addEnemy1(-9.3 + space);
 
-	var numEn2=Math.floor(getRandomArbitrary(0, 3));
-	for(var i=0;i<numEn2; i++) addEnemy2()
-
+	addEnemy2(-10.9 + space);
+	addEnemy1(-11.8 + space);
 	
 	var a = sceneModels.length
 	// chao
