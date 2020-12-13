@@ -89,9 +89,15 @@
                   </div>
                 <div class="row h-100 align-items-center justify-content-center text-center">
                   <div>
+                    <!-- game mode -->
+                    <p style="font-family: crossyRoads; color: #f1f1f1;">Game Mode</p>
+                    <button id="normal-game-mode">Normal</button>
+                    <button id="ludicrous-game-mode">Ludicrous</button>
+
+                    <!-- enemies speed -->
                     <p style="font-family: crossyRoads; color: #f1f1f1;">Enemies Speed</p>
                     <button id="increase-enemies-speed">+</button>
-                    <button id="decrease-enemies-speed">-</button>
+                    <button id="decrease-enemies-speed">-</button>                    
                   </div>
                     <div class="col-lg-8 align-self-baseline">
                         <canvas id="game-surface" style="border:1px solid #000000;" width="550" height="550"></canvas>
@@ -125,8 +131,8 @@
                       </script>
                     </div>
                     <div style="text-align: center">
-                      <h3>Instructions:</h3>
-                      <ul>
+                      <h4 style="font-family: crossyRoads; color: #f1f1f1;">Instructions:</h3>
+                      <ul style="font-family: crossyRoads; color: #f1f1f1;">
                         <li>
                           <p>W - front</p>
                         </li>
@@ -139,9 +145,12 @@
                         <li>
                           <p>D - right</p>
                         </li>
+                        <li>
+                          <p>P - play/pause</p>
+                        </li>
                       </ul>
 
-                      <p>Alternatively you can click on the right/left of the screen to move to the right/left.</p>
+                      <p style="font-family: crossyRoads; color: #f1f1f1;">Alternatively you can click on the right/left of the screen to move to the right/left.</p>
                     </div>
                 </div>
 
@@ -189,22 +198,22 @@
               
                   </p>
                   
-                  <p>Choose the <b>projection type</b>:
+                  <!-- <p>Choose the <b>projection type</b>:
                   
-                      <select id="projection-selection">
-                    <option value="0">Orthogonal Projection</option>
-                    <option value="1">Perspective Projection</option>
-                      </select>
+                    <select id="projection-selection">
+                      <option value="0">Orthogonal Projection</option>
+                      <option value="1">Perspective Projection</option>
+                    </select>
                       
-                      </p>
+                  </p> -->
                       
-                      <p>Choose the <b>rendering mode</b>:
+                  <p>Choose the <b>rendering mode</b>:
                   
-                      <select id="rendering-mode-selection">
-                    <option value="0">Filled Triangles</option>
-                    <option value="1">Wireframe</option>
-                    <option value="2">Vertices</option>
-                      </select>
+                    <select id="rendering-mode-selection">
+                      <option value="0">Filled Triangles</option>
+                      <option value="1">Wireframe</option>
+                      <option value="2">Vertices</option>
+                    </select>
                               
                 </div>
 

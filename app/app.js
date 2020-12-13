@@ -43,6 +43,9 @@ var pos_Viewer = [ 0.0, 0.0, 0.0, 1.0 ];
 
 var enemies_speed = 0.02;
 
+var game_mode = 0; // 0 -> normal | 1 -> automatico
+
+var pause = 0;
 
 
 //----------------------------------------------------------------------------
@@ -343,21 +346,30 @@ function drawScene() {
 	
 	countFrames();
 
-	colision();
+	verifyLoss();
+
+	verifyMap();
 }
 
 function verifyLoss(){
-	if(sceneModels[getChicken()].tz>1){
-		sceneModels[getChicken()].tz=-0.5;
-		initScenes();
-		drawScene();
-		alert("YOU LOST!");
-		var secondsLabel = document.getElementById("score");
-		secondsLabel.innerHTML=0;
-		var niv = document.getElementById("nivel");
-		niv.innerHTML=0;
-		
+	if(sceneModels[getChicken()].tz > 1){
+		alert("Ups! You got behind! Click Ok to play again.");
+		restart();		
 	}
+	else if(colision() == 1){
+		alert("Ups! You have been run over! Click Ok to play again.");
+		restart();
+	}
+}
+
+function restart(){
+	sceneModels[getChicken()].tz = -0.5;
+	initScenes();
+	drawScene();
+	var secondsLabel = document.getElementById("score");
+	secondsLabel.innerHTML=0;
+	var niv = document.getElementById("nivel");
+	niv.innerHTML=0;
 }
 
 function colision(){
@@ -365,11 +377,11 @@ function colision(){
 		if(sceneModels[i].type == "Enemy1" || sceneModels[i].type == "Enemy2"){
 			if ( Math.abs(sceneModels[getChicken()].tx - sceneModels[i].tx) <= 0.4 && Math.abs(sceneModels[getChicken()].ty - sceneModels[i].ty) <= 0.4 
 																		&& Math.abs(sceneModels[getChicken()].tz - sceneModels[i].tz) <= 0.4){
-				alert("Ups! You collided! Click OK to play again!");
+				return 1;
 			}
 		}
 	}
-	
+	return 0;
 }
 
 //----------------------------------------------------------------------------
@@ -394,9 +406,21 @@ function animate() {
 		if( globalRotationYY_ON ) {
 
 			globalAngleYY += globalRotationYY_DIR * globalRotationYY_SPEED * (90 * elapsed) / 1000.0;
-	    }
+		}
+		
+		// Rotating the light sources
+	
+		for(var i = 1; i < lightSources.length; i++ )
+	    {
+			if( lightSources[i].isRotYYOn() ) {
 
-		//descomentar
+				var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
+		
+				lightSources[i].setRotAngleYY( angle );
+			}
+		}
+
+		// Mover inimigos
 		for(var i = 1; i < sceneModels.length; i++){
 			if(sceneModels[i].type == "Enemy1"){
 				if(sceneModels[i].tx <= -4){
@@ -419,46 +443,51 @@ function animate() {
 			}
 		}
 		
-		// Rotating the light sources
-	
-		// for(var i = 0; i < lightSources.length; i++ )
-	    // {
-		// 	if( lightSources[i].isRotYYOn() ) {
-
-		// 		var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
 		
-		// 		lightSources[i].setRotAngleYY( angle );
-		// 	}
-		// }
-		//verifyMap();
-		verifyLoss();
-		moveMap(0.05)
+		if(game_mode == 0) {  // a galinha fica parada, o mapa avança devagar para nao ser possivel ficar sempre na mesma posicao
+			moveMap(0.005);	
+			enemies_speed = 0.05;		
+		}
+		else { // modo "automatico"
+			moveMapChicken(0.05);
+			enemies_speed = 0.02;
+		}
 }
 	
 	lastTime = timeNow;
 }
 
-
+// o mapa avança lentamente, a galinha fica parada
 function moveMap(amount){
+	for(i = 1; i < sceneModels.length; i++){
+		if(sceneModels[i].type == "Cloud") sceneModels[i].tz += 0.002
+		else
+		{
+			sceneModels[i].tz += amount;		//arrasta tudo
+		} 
+	}	
+	sceneModels[getChicken()].tz += amount; //galinha anda para tras para dar a sensaçao que esta no mesmo sitio
+}
+
+// o mapa avança lentamente, a galinha acompanha
+function moveMapChicken(amount){
 	for(i = 1; i < sceneModels.length; i++){
 		if(sceneModels[i].type == "Cloud") sceneModels[i].tz += 0.002
 		else sceneModels[i].tz += amount;		//arrasta tudo
 	}
-	if(checkBlocked()[0])	sceneModels[getChicken()].tz += amount; //arraste a galinha pq tem um bloco à frente
-//	console.log(sceneModels + " - " + sceneModels.length);
-	verifyMap();
+	if(checkBlocked()[0])	sceneModels[getChicken()].tz += amount; //arraste a galinha pq tem um bloco à frentes
 }
 
-function moveMapChicken(amount){
+// fazer a galinha andar 
+function moveChicken(amount){
 
 	if(!checkBlocked()[0]){
 		for(i = 1; i < sceneModels.length; i++){
 			if(sceneModels[i].type == "Cloud") sceneModels[i].tz += 0.002
 			else sceneModels[i].tz += amount;
 		}
-		if(sceneModels[getChicken()].tz>=-10) sceneModels[getChicken()].tz -= amount;
+		if(sceneModels[getChicken()].tz >= -10) sceneModels[getChicken()].tz -= amount;
 	}
-	verifyMap();
 }
 
 function moveLeftChicken(amount){
@@ -518,33 +547,19 @@ function checkBlocked(){
 
 
 function verifyMap(){
-	// console.log("PPOOOOOOOWWWWW")
 	var add=0;
 	var listaRemove= [];
 	sceneModels.forEach(element => { if(element.tz <=-14.5)add =1;});
-	// console.log("COMPONENTES Z: ")
-	// console.log(sceneModels.length)
 	sceneModels.forEach(element => {
 		 if(element.tz > 2){
 			var ind= sceneModels.indexOf(element);
 			sceneModels.splice(ind,1);
 		}			
 	 });
-	// for(var i=0; i<sceneModels.length;i++){
-	// 	console.log(sceneModels[i].tz)
-	// }
 
 	if(add==0){
-		// console.log("A ADICIONAR ");
-		// for(i = 0; i < lista.length; i++){
-		// 	sceneModels.push(lista[i])
 		extendMap();
-		
-		//drawScene()
-	//}
 	}
-	
-	//console.log("FLAG:" + add)
 }
 
 function getChicken(){
@@ -558,12 +573,13 @@ function getChicken(){
 // Timer
 
 function tick() {
+	if (pause == 0){
+		requestAnimFrame(tick);
 	
-	requestAnimFrame(tick);
-	
-	drawScene();
-	
-	animate();
+		drawScene();
+		
+		animate();
+	}	
 }
 
 
@@ -710,32 +726,21 @@ function setEventListeners(){
 			break;
 
 			case 119 : // front
-				// if (sceneModels[0].tz >= -12)
-				// {
-				// 	sceneModels[0].tz -= 0.25;
-				// }	
-				// for(i = 1; i < sceneModels.length; i++){
-				// 	sceneModels[i].tz += 0.25;
-				// }
-				moveMapChicken(0.35)
-				//console.log(sceneModels[3].tz)
-				// if(sceneModels[3].tz == 0.75){
-				// 	console.log(roadModels);
-				// 	for(i = 0; i < lista.length; i++){
-				// 		sceneModels.push(lista[i]);
-				// 	}
-				console.log(sceneModels + " - " + sceneModels.length);
-				verifyMap();
-				//}
+				moveChicken(0.25);
 			break;
 
-			case 115  : // back
-			// if (sceneModels[0].tz <= 1.8)
-			// {
-			// 	sceneModels[0].tz += 0.25;
-			// }	
-			sceneModels[getChicken()].tz += 0.5;
-			
+			case 115 : // back	
+				sceneModels[getChicken()].tz += 0.5;			
+			break;
+
+			case 112: // letra "p" -> pausa/joga
+				if(pause == 0){
+					pause = 1;
+				}
+				else{
+					pause = 0;
+				}
+				tick();
 			break;
 		}
 
@@ -750,23 +755,31 @@ function setEventListeners(){
 		enemies_speed -= 0.01;	
 	}; 
 
-	var projection = document.getElementById("projection-selection");
+	document.getElementById("normal-game-mode").onclick = function(){
+		game_mode = 0;
+	}; 
+
+	document.getElementById("ludicrous-game-mode").onclick = function(){
+		game_mode = 1;
+	}; 
+
+	// var projection = document.getElementById("projection-selection");
 	
-	projection.addEventListener("click", function(){
+	// projection.addEventListener("click", function(){
 				
-		// Getting the selection
+	// 	// Getting the selection
 		
-		var p = projection.selectedIndex;
+	// 	var p = projection.selectedIndex;
 				
-		switch(p){
+	// 	switch(p){
 			
-			case 0 : projectionType = 0;
-				break;
+	// 		case 0 : projectionType = 0;
+	// 			break;
 			
-			case 1 : projectionType = 1;
-				break;
-		}  	
-	}); 
+	// 		case 1 : projectionType = 1;
+	// 			break;
+	// 	}  	
+	// }); 
 
 	// Dropdown list
 	
