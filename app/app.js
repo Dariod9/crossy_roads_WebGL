@@ -383,12 +383,25 @@ function animate() {
 	    }
 
 		//descomentar
-		for(var i=0; i<sceneModels.length; i++){
-			if(sceneModels[i].type == "Enemy1")
-				sceneModels[i].tx -= 0.02;
-				
-			if(sceneModels[i].type=="Enemy2"){
-				sceneModels[i].tx += 0.02;
+		for(var i = 1; i < sceneModels.length; i++){
+			if(sceneModels[i].type == "Enemy1"){
+				if(sceneModels[i].tx <= -4){
+					sceneModels[i].dirXX = 1;
+				}
+				if(sceneModels[i].tx >= 4){
+					sceneModels[i].dirXX = -1;
+				}
+				sceneModels[i].tx += sceneModels[i].dirXX * enemies_speed;
+			}
+								
+			if(sceneModels[i].type == "Enemy2"){
+				if(sceneModels[i].tx <= -4){
+					sceneModels[i].dirXX = 1;
+				}
+				if(sceneModels[i].tx >= 4){
+					sceneModels[i].dirXX = -1;
+				}
+				sceneModels[i].tx += sceneModels[i].dirXX * enemies_speed;
 			}
 		}
 		

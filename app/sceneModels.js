@@ -70,7 +70,9 @@ function emptyModelFeatures() {
 
 	//TIPO DE OBJETO
 
-	this.type= null;
+	this.type = null;
+
+	this.dirXX = null; // 1 direita; -1 esquerda
 }
 
 function singleTriangleModel( ) {
@@ -247,7 +249,7 @@ sceneModels.push( new simpleCubeModel() );
 sceneModels[0].tx = 0.0; sceneModels[0].ty = 0.0; sceneModels[0].tz = -0.5;
 sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.2;
 sceneModels[0].kDiff = [1,1,1];
-sceneModels[0].type = "Chicken"
+sceneModels[0].type = "Chicken";
 
 
 //obstaculo
@@ -256,8 +258,9 @@ sceneModels.push( new simpleCubeModel() );
 sceneModels[1].tx = 1.5; sceneModels[1].ty = 0.0; sceneModels[1].tz = -3.4;
 
 sceneModels[1].sx = sceneModels[1].sy = sceneModels[1].sz = 0.2;
-sceneModels[1].kDiff = [0,0,1];
-sceneModels[1].type = "Enemy1"
+sceneModels[1].kDiff = [1,0,1];
+sceneModels[1].type = "Enemy1";
+sceneModels[1].dirXX = "1";
 
 // ob 2
 sceneModels.push( new simpleCubeModel() ); 
@@ -266,7 +269,8 @@ sceneModels[2].tx = 0.5; sceneModels[2].ty = 0.0; sceneModels[2].tz = -4.3;
 
 sceneModels[2].sx = sceneModels[2].sy = sceneModels[2].sz = 0.2;
 sceneModels[2].kDiff = [0,0,1];
-sceneModels[2].type = "Enemy2"
+sceneModels[2].type = "Enemy2";
+sceneModels[2].dirXX = "-1";
 
 // chao
 sceneModels.push( new simpleCubeModel() );
@@ -277,7 +281,7 @@ sceneModels[3].sx = 3;
 sceneModels[3].sy = 0.001;
 sceneModels[3].sz = 13;
 sceneModels[3].kDiff = [0.18,0.18,0.18];
-sceneModels[3].type = "Road"
+sceneModels[3].type = "Road";
 
 
 // "relva"1
@@ -288,7 +292,7 @@ sceneModels[4].tx = relvatx; sceneModels[4].ty = relvaty; sceneModels[4].tz = -0
 sceneModels[4].sx = relvasx;
 sceneModels[4].sy = relvasy;
 sceneModels[4].sz = relvasz;
-sceneModels[4].type = "Grass"
+sceneModels[4].type = "Grass";
 
 
 // cor
@@ -304,7 +308,7 @@ sceneModels[5].sy = relvasy;
 sceneModels[5].sz = relvasz;
 //cor
 sceneModels[5].kDiff = [0,1,0];
-sceneModels[5].type = "Grass"
+sceneModels[5].type = "Grass";
 
 
 // relva3
@@ -316,7 +320,7 @@ sceneModels[6].sx = relvasx;
 sceneModels[6].sy = relvasy;
 sceneModels[6].sz = relvasz;
 sceneModels[6].kDiff = [0,1,0];
-sceneModels[6].type = "Grass"
+sceneModels[6].type = "Grass";
 
 
 // relva4
@@ -328,7 +332,7 @@ sceneModels[7].sx = relvasx;
 sceneModels[7].sy = relvasy;
 sceneModels[7].sz = relvasz;
 sceneModels[7].kDiff = [0,1,0];
-sceneModels[7].type = "Grass"
+sceneModels[7].type = "Grass";
 
 // relva5
 sceneModels.push( new simpleCubeModel() );
@@ -339,7 +343,7 @@ sceneModels[8].sx = relvasx;
 sceneModels[8].sy = relvasy;
 sceneModels[8].sz = relvasz;
 sceneModels[8].kDiff = [0,1,0];
-sceneModels[8].type = "Grass"
+sceneModels[8].type = "Grass";
 
 
 // arbusto 1
@@ -351,7 +355,7 @@ sceneModels[9].sx = 0.3;
 sceneModels[9].sy = 0.2;
 sceneModels[9].sz = 0.2;
 sceneModels[9].kDiff = [0,1,1];
-sceneModels[9].type = "Block"
+sceneModels[9].type = "Block";
 
 
 // arbusto 2
@@ -363,7 +367,7 @@ sceneModels[10].sx = 0.3;
 sceneModels[10].sy = 0.2;
 sceneModels[10].sz = 0.2;
 sceneModels[10].kDiff = [0,1,1];
-sceneModels[10].type = "Block"
+sceneModels[10].type = "Block";
 
 // addEnemy1(-1);
 // addEnemy2(-1.4);
@@ -402,7 +406,8 @@ function addEnemy1(z_value){		// anda para a esquerda
 
 	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
 	sceneModels[a].kDiff = [1,0,1];
-	sceneModels[a].type = "Enemy1"
+	sceneModels[a].type = "Enemy1";
+	sceneModels[a].dirXX = "-1";
 }
 
 function addEnemy2(z_value){	// anda para a direita
@@ -415,7 +420,8 @@ function addEnemy2(z_value){	// anda para a direita
 
 	sceneModels[a].sx = sceneModels[a].sy = sceneModels[a].sz = 0.2;
 	sceneModels[a].kDiff = [0,0,1];
-	sceneModels[a].type = "Enemy2"
+	sceneModels[a].type = "Enemy2";
+	sceneModels[a].dirXX = "1";
 }
 
 function extendMap(){
