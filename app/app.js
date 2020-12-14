@@ -398,7 +398,7 @@ function animate() {
 		
 		// Global rotation
 		
-		if( globalRotationYY_ON == 1 && (Number(document.getElementById("nivel").innerHTML) >= 1)) {
+		if( globalRotationYY_ON == 1 && (Number(document.getElementById("nivel").innerHTML) >= 10)) {
 
 			globalAngleYY += globalRotationYY_DIR * globalRotationYY_SPEED * (90 * elapsed) / 1000.0;
 			if( globalAngleYY >= 45 ){
