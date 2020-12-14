@@ -354,22 +354,17 @@ function drawScene() {
 function verifyLoss(){
 	if(sceneModels[getChicken()].tz > 1){
 		alert("Ups! You got behind! Click Ok to play again.");
-		restart();		
+		exit();		
 	}
 	else if(colision() == 1){
 		alert("Ups! You have been run over! Click Ok to play again.");
-		restart();
+		exit();
 	}
 }
 
-function restart(){
-	sceneModels[getChicken()].tz = -0.5;
-	initScenes();
-	drawScene();
-	var secondsLabel = document.getElementById("score");
-	secondsLabel.innerHTML=0;
-	var niv = document.getElementById("nivel");
-	niv.innerHTML=0;
+function exit(){
+	var e=1;
+	location.reload();
 }
 
 function colision(){
@@ -697,7 +692,7 @@ function setEventListeners(){
 		reader.readAsText( file );		
 	}
 
-	document.addEventListener("click", function(event){
+	document.getElementById("game-surface").addEventListener("click", function(event){
 
 		var x = event.offsetX;
 		var y = event.offsetY;
