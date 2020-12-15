@@ -45,7 +45,7 @@ var enemies_speed = 0.02;
 
 var game_mode = 0; // 0 -> normal | 1 -> automatico
 
-var pause = 0;
+var pause = 1;
 
 
 //----------------------------------------------------------------------------
@@ -758,12 +758,12 @@ function setEventListeners(){
 	});
 
 	document.getElementById("increase-enemies-speed").onclick = function(){
-		enemies_speed += 0.05;	
+		enemies_speed += 0.01;	
 		console.log("+");
 	}; 
 	
 	document.getElementById("decrease-enemies-speed").onclick = function(){
-		enemies_speed -= 0.05;	
+		enemies_speed -= 0.01;	
 		if(enemies_speed<0) enemies_speed=0
 		console.log("-");
 	}; 
