@@ -449,11 +449,10 @@ function animate() {
 		
 		if(game_mode == 0) {  // a galinha fica parada, o mapa avança devagar para nao ser possivel ficar sempre na mesma posicao
 			moveMap(0.005);	
-			enemies_speed = 0.05;		
+				
 		}
 		else { // modo "automatico"
 			moveMapChicken(0.05);
-			enemies_speed = 0.02;
 		}
 }
 	
@@ -765,15 +764,21 @@ function setEventListeners(){
 	
 	document.getElementById("decrease-enemies-speed").onclick = function(){
 		enemies_speed -= 0.05;	
+		if(enemies_speed<0) enemies_speed=0
 		console.log("-");
 	}; 
 
 	document.getElementById("normal-game-mode").onclick = function(){
 		game_mode = 0;
+		enemies_speed = 0.05;
+
+		
 	}; 
 
 	document.getElementById("ludicrous-game-mode").onclick = function(){
 		game_mode = 1;
+		enemies_speed = 0.02;
+
 	}; 
 
 	// var projection = document.getElementById("projection-selection");
